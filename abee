@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+/**
+ * Abee - Meteor-Scaffolding
+ * =========================
+ * 
+ * Abee is a meteor scaffolding application that
+ * 
+ * - creates your app trough meteor and build a customizable "best practice" directory structure 
+ * - adds customizable views/templates to your app (and can delete them too)
+ * - adds template based models with propper collection, client-subscription and server-publish (and can delete them too)
+ * - generates allow/deny stubs for your collections
+ * - adds basic routes in the url -> view/template style.
+ * 
+ * for you.
+ */
+
+var create  = require('./lib/create.js').create;
+var route   = require('./lib/route.js').route;
+
+var view	= require('./lib/view.js').view;
+var model   = require('./lib/model.js').model;	
+var help	= require('./lib/help.js').help;
+
+var C 		= require('./colors.js').colors;
+
+var cmd 	= process.argv[2];
+
+
+switch(cmd) {
+	case "create":
+		var appName = process.argv[3];
+		create.run(appName);
+	break;
+
+	case "template":
+	case "view": 
+		var subcmd    = process.argv[3];
+		var viewName  = "";
+		var viewGroup = process.argv[process.argv.length - 1];
+		switch (subcmd){
+			case "add":
+				for (var i = 4; i < process.argv.length - 1; i++){	
+					viewName = process.argv[i];
+					if (viewGroup != "."){
+						view.add(viewName, viewGroup);
+					}else{
+						view.add(viewName);
+					}
+				}
+			break;
+			case "remove":
+				for (var i = 4; i < process.argv.length - 1; i++){			
+					viewName = process.argv[i];
+					if (viewGroup != "."){
+						view.del(viewName, viewGroup);
+					}else{
+						view.del(viewName);
+					}
+
+				}
+			break;
+			case "list":
+				view.list();
+			break;
+			/*case "help":
+			default:
+				help.view(); 
+			break;*/
+		}
+	break;
+
+	case "route":
+		var subcmd = process.argv[3];
+		var routeName = process.argv[4];
+
+		switch (subcmd){
+			case "add":
+				for (var i = 4; i < process.argv.length; i++){	
+					routeName = process.argv[i];
+					routeName = routeName.split(":");
+					route.add(routeName[0], routeName[1]);
+				}
+			break;
+			case "remove":
+				for (var i = 4; i < process.argv.length; i++){	
+					routeName = process.argv[i];
+					routeName = routeName.split(":");
+					route.del(routeName[0], routeName[1]);
+				}
+			break;
+			case "list":
+				route.list();
+			break;
+			/*case "help":
+			default:
+				help.route(); 
+			break;*/
+		}
+	break;
+
+	case "model":
+		var subcmd = process.argv[3];
+		var modelName = process.argv[4];
+
+		switch (subcmd){
+			case "add":
+				for (var i = 4; i < process.argv.length; i++){	
+					modelName = process.argv[i];
+					if (process.argv[i+1] && process.argv[i+1].match(/^\[/)){
+						var attr = process.argv[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
+						try {							
+							attr = JSON.parse(attr);
+						}catch(e){
+							console.log("The attributes must specified as [attr1,attr2,attr3]");
+							return;
+						}
+						i=i+1;
+						model.add(modelName, attr);
+					}else{
+						model.add(modelName);
+					}
+				}
+			break;
+			case "remove":
+				for (var i = 4; i < process.argv.length; i++){	
+					modelName = process.argv[i];
+					model.del(modelName);
+				}
+			break;
+			case "list":
+				model.list();
+			break;
+			/*case "help":
+			default:
+				help.model(); 
+			break;*/
+		}
+	break;
+
+	case "help":
+	default:
+		help.run();
+	break;
+}
+
