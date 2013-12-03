@@ -75,7 +75,7 @@ creates a model, adds a collection, client-side subscription, server-side publis
 
     
 creates a template in the clients template directory.  
-*hint: insert a ```.``` as templateGroup to omit templateGroup.*
+*hint: insert a ```.``` as templateGroup or add only one template to omit templateGroup.*
 
 ### route       
 

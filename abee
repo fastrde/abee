@@ -40,6 +40,11 @@ switch(cmd) {
     var viewGroup = process.argv[process.argv.length - 1];
     switch (subcmd){
       case "add":
+        if (process.argv.length == 5){
+      	 viewName = process.argv[4];
+      	 view.add(viewName);
+      	 return;
+      	}
         for (var i = 4; i < process.argv.length - 1; i++){  
           viewName = process.argv[i];
           if (viewGroup != "."){
@@ -50,6 +55,11 @@ switch(cmd) {
         }
       break;
       case "remove":
+      	if (process.argv.length == 5){
+      	 viewName = process.argv[4];
+      	 view.del(viewName);
+      	 return;
+      	}
         for (var i = 4; i < process.argv.length - 1; i++){      
           viewName = process.argv[i];
           if (viewGroup != "."){
