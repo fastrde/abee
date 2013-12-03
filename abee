@@ -58,15 +58,11 @@ switch(cmd) {
       case "list":
         view.list();
       break;
-      /*case "help":
-      default:
-        help.view(); 
-      break;*/
     }
   break;
 
   case "route":
-    var subcmd = process.argv[3];
+    var subcmd    = process.argv[3];
     var routeName = process.argv[4];
 
     switch (subcmd){
@@ -87,15 +83,11 @@ switch(cmd) {
       case "list":
         route.list();
       break;
-      /*case "help":
-      default:
-        help.route(); 
-      break;*/
     }
   break;
 
   case "model":
-    var subcmd = process.argv[3];
+    var subcmd    = process.argv[3];
     var modelName = process.argv[4];
 
     switch (subcmd){
@@ -126,10 +118,6 @@ switch(cmd) {
       case "list":
         model.list();
       break;
-      /*case "help":
-      default:
-        help.model(); 
-      break;*/
     }
   break;
 

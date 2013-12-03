@@ -1,7 +1,7 @@
 {
   "name" : "abee",
   "barename": "abee",
-  "version" : "0.6.1-2",
+  "version" : "0.6.1-3",
   "description" : "Abee is a templated and costumizable meteor scaffolding application that uses \"best practices\" from the meteor dev-workshops.",
   "homepage" : "http://fastr.de/abee",
   "keywords": [
