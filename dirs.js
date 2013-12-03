@@ -14,7 +14,9 @@ exports.dirs = {
         'subscriptions': {},       // Subscribe to data
       }, 
     },
-    'views':{},                    // templates / filled with mts 
+    'views':{                      // templates
+    	'index.html': "index.html" // start-webpage / layout
+    },                    
   },
   'lib':{                          // gets loaded first
     'helpers':{},                  // client AND server helpers

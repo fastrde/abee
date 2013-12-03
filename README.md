@@ -34,26 +34,28 @@ Usage
 
 commands:
 
-**create**     
-creates an app like meteor does, but extends it with a (configurable) "best practice" directory structure.
+**create**   
 
-    $ abee create <YourAppName>
+    $ abee create <YourAppName>  
+    
+Creates an app like meteor does, but extends it with a (configurable) "best practice" directory structure.
+When you call `create` the `dirs.js` in the abee directory is parsed and the structure is created for you.
 
 **help**  
-prints help message.
                  
     $ abee help
+    
+prints help message.
  
 **model**         
-creates a model, adds a collection, client-side subscription, server-side publish and permissions.
-
+ 
     $ abee model add <modelName1> [attribute1,..attributeN] ... <modelNameN> [attribute1,..attributeN]
     $ abee model remove <modelName1> ... <modelNameN>
     $ abee model list
+    
+creates a model, adds a collection, client-side subscription, server-side publish and permissions.
 
 **template**  or **view**    
-creates a template in the clients template directory.  
-*hint:* insert a ```.``` as templateGroup to omit templateGroup.
     
     $ abee template add <templateName1> ... <templateNameN> <templateGroup>
     $ abee template remove <templateName1> ... <templateNameN> <templateGroup>
@@ -64,15 +66,20 @@ or
     $ abee view add <templateName1> ... <templateNameN> <templateGroup>
     $ abee view remove <templateName1> ... <templateNameN> <templateGroup>
     $ abee view list
+    
+creates a template in the clients template directory.  
+*hint:* insert a ```.``` as templateGroup to omit templateGroup.
 
- **route**         
-creates a route (when meteor-router is used)
+**route**         
+
 
     $ abee route add <url1>[:<view1>] ... <urlN>[:<viewN>]
     $ abee route remove <url1>[:<view1>] ... <urlN>[:<viewN>]
+    
+creates a route (when meteor-router is used)
  
-Examples
-------------
+Usage Examples
+--------------
 Create a new app named "someHotStuff" with "best practice" directory structure
 
     $ abee create someHotStuff
@@ -97,6 +104,45 @@ Remove models user and post
 
     $ abee model remove user post
 
+dirs.js
+--------------------------
+`dirs.js` describes the directory-structure that is build when you call `abee create`
+
+    'dirName':{},  //creates an empty directory
+    'dirName2' :{  //creates an directory with an subdirectory called subDir
+      'subDir': {}
+    },
+    'fileName.ext': null, //creates an empty file
+    'fileName2.ext': "templateName", //uses template 'templateName' for file
+
+
+Templates
+--------------------------
+Abee creates files by handlebars-templates, so that's the same what you, as meteor developer, already know. 
+
+`abee create` parses the `dirs.js` file and generates files from templates when a templateName is given. 
+Use `{{appName}}` in your templates to display yours app actual name.
+
+`abee model` uses a lot of templates.
+
+- For models it looks for a template named `<modelName>Model.js`.
+The fallback is the standard template named `model.js`.It provides the name of the model as 
+`{{model}}` the capitalized name as `{{Model}}` and all attributes given at the command-line in `{{attr}}`.
+Each attribute has `{{name}}` as name, `{{Name}}` as capitalized name.
+- For subscriptions it looks for a template named  `<modelName>Subscription.js`.
+The fallback is named `subscription.js`. Only variable passed is `{{model}}`, the lowercase modelName.
+- For publish it looks for a template named `<modelName>Publish.js`.
+The fallback is named `publish.js`. It privodes the lowercase modelName `{{model}}` 
+and the name of the collection in `{{collection}}`.
+- For permissions it looks for a template named `<modelName>Permissions.js`. 
+The fallback is named `permissions.js`. The only variable provided is `{{collection}}`, the collections name.
+
+`abee view` uses two templates.
+
+- For the .js file it looks for a template named `<viewName>.js`. The fallback is the standard template named `view.js`
+- For the .html file it looks for a template named `<viewName>.html`. The fallback is the standard template named `view.html`
+
+
 Directory Structure
 ---------------------------
 
@@ -111,6 +157,7 @@ Directory Structure
     | |   |-- startup.js      // run on new client init
     | |
     | |-- views               // views / templates 
+    |   |-- index.html        // startpoint for your client templates
     |
     |-- lib                   // gets loaded first
     | |-- helpers             // client AND server helpers
