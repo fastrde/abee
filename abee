@@ -63,6 +63,9 @@ switch(cmd) {
       case "list":
         view.list();
       break;
+      default:
+      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+      break;
     }
   break;
 
@@ -88,6 +91,10 @@ switch(cmd) {
       case "list":
         route.list();
       break;
+      default:
+      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+      break;
+      
     }
   break;
 
@@ -123,6 +130,10 @@ switch(cmd) {
       case "list":
         model.list();
       break;
+      default:
+      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+      break;
+      
     }
   break;
 
