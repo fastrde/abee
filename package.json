@@ -1,7 +1,7 @@
 {
   "name" : "abee",
   "barename": "abee",
-  "version" : "0.6.1",
+  "version" : "0.6.1-2",
   "description" : "Abee is a templated and costumizable meteor scaffolding application that uses \"best practices\" from the meteor dev-workshops.",
   "homepage" : "http://fastr.de/abee",
   "keywords": [
@@ -11,8 +11,8 @@
     "utility"
   ],
   "repository": {
-  	"type": "git",
-  	"url": "https://github.com/fastrde/abee.git"
+    "type": "git",
+    "url": "https://github.com/fastrde/abee.git"
   },
   "author":{
     "name": "Fabian Strachanski"
@@ -20,7 +20,7 @@
   "license": "MIT",
   "readmeFilename": "README.markdown",
   "engines":{
-  	"node": ">=0.10.0"
+    "node": ">=0.10.0"
   },
   "dependencies": {
     "handlebars": "~1.1"    
