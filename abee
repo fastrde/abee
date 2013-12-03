@@ -23,10 +23,15 @@ var C       = require('./colors.js').colors;
 var cmd     = process.argv[2];
 
 switch(cmd) {
+  case "abeetize":
+    var appName = process.argv[3];
+    create.abeetize(appName);
+  break;
   case "create":
     var appName = process.argv[3];
     create.run(appName);
   break;
+
 
   case "template":
   case "view": 

@@ -3,6 +3,7 @@ Abee
 a meteor scaffolding application that
 
 - creates your app and build a *customizable* "best practice" directory structure
+- extends your existing app.
 - adds/removes *customizable* views/templates to/from your app
 - adds/removes *template based* models with proper collection, client-subscription and server-publish
 - generates allow/deny stubs for your collections
@@ -30,24 +31,33 @@ I don't want to write the same stuff over and over again. Due to the structure o
 Usage
 ---------
 
+Abee operates in your app-directory (the place where you call meteor to start your app). The two exceptions are `create` because there is no app-directory before you call `create` ;-) and `abeetize` with a parameter.
+
 **usage: abee command [subcommand] [options]**
 
 commands:
 
-**create**   
+### abeetize
+
+    $ abee abeetize                    #called IN app-directory
+    $ abee abeetize <YourMeteorApp>    #called like create 
+    
+Extends your meteor app with the in section "Directory Structure" listed structure.
+
+### create   
 
     $ abee create <YourAppName>  
     
 Creates an app like meteor does, but extends it with a (configurable) "best practice" directory structure.
 When you call `create` the `dirs.js` in the abee directory is parsed and the structure is created for you.
 
-**help**  
+### help 
                  
     $ abee help
     
 prints help message.
  
-**model**         
+### model     
  
     $ abee model add <modelName1> [attribute1,..attributeN] ... <modelNameN> [attribute1,..attributeN]
     $ abee model remove <modelName1> ... <modelNameN>
@@ -55,22 +65,19 @@ prints help message.
     
 creates a model, adds a collection, client-side subscription, server-side publish and permissions.
 
-**template**  or **view**    
-    
-    $ abee template add <templateName1> ... <templateNameN> <templateGroup>
-    $ abee template remove <templateName1> ... <templateNameN> <templateGroup>
-    $ abee template list
-
-or
-
+### view (or template)    
+     
     $ abee view add <templateName1> ... <templateNameN> <templateGroup>
     $ abee view remove <templateName1> ... <templateNameN> <templateGroup>
     $ abee view list
+
+
+
     
 creates a template in the clients template directory.  
-*hint:* insert a ```.``` as templateGroup to omit templateGroup.
+*hint: insert a ```.``` as templateGroup to omit templateGroup.*
 
-**route**         
+### route       
 
 
     $ abee route add <url1>[:<view1>] ... <urlN>[:<viewN>]
@@ -80,6 +87,10 @@ creates a route (when meteor-router is used)
  
 Usage Examples
 --------------
+Extends app "someHotStuff" with "best practice" directory structure
+
+    $ abee abeetize someHotStuff
+
 Create a new app named "someHotStuff" with "best practice" directory structure
 
     $ abee create someHotStuff
@@ -120,27 +131,33 @@ Templates
 --------------------------
 Abee creates files by handlebars-templates, so that's the same what you, as meteor developer, already know. 
 
-`abee create` parses the `dirs.js` file and generates files from templates when a templateName is given. 
-Use `{{appName}}` in your templates to display yours app actual name.
+- `abee create` parses the `dirs.js` file and generates files from templates when a templateName is specified.  
+  Use `{{appName}}` in your templates to display yours app actual name.
 
-`abee model` uses a lot of templates.
+- `abee model` uses a lot of templates.
+  - For models it looks for a template named `<modelName>Model.js`.  The fallback is the standard template named `model.js`.  
+    It provides the name of the model as `{{model}}`,  
+    the capitalized name as `{{Model}}`   
+    and all attributes given at the command-line in `{{attr}}`.  
+    Each attribute has `{{name}}` as name and `{{Name}}` as capitalized name.
 
-- For models it looks for a template named `<modelName>Model.js`.
-The fallback is the standard template named `model.js`.It provides the name of the model as 
-`{{model}}` the capitalized name as `{{Model}}` and all attributes given at the command-line in `{{attr}}`.
-Each attribute has `{{name}}` as name, `{{Name}}` as capitalized name.
-- For subscriptions it looks for a template named  `<modelName>Subscription.js`.
-The fallback is named `subscription.js`. Only variable passed is `{{model}}`, the lowercase modelName.
-- For publish it looks for a template named `<modelName>Publish.js`.
-The fallback is named `publish.js`. It privodes the lowercase modelName `{{model}}` 
-and the name of the collection in `{{collection}}`.
-- For permissions it looks for a template named `<modelName>Permissions.js`. 
-The fallback is named `permissions.js`. The only variable provided is `{{collection}}`, the collections name.
+  - For subscriptions it looks for a template named  `<modelName>Subscription.js`. The fallback is `subscription.js`.   
+    Only variable passed is `{{model}}`, the lowercase modelName.
 
-`abee view` uses two templates.
+  - For publish it looks for a template named `<modelName>Publish.js`. The fallback is `publish.js`.  
+    It provides the lowercase modelName `{{model}}`  
+    and the name of the collection in `{{collection}}`.
 
-- For the .js file it looks for a template named `<viewName>.js`. The fallback is the standard template named `view.js`
-- For the .html file it looks for a template named `<viewName>.html`. The fallback is the standard template named `view.html`
+  - For permissions it looks for a template named `<modelName>Permissions.js`.  
+    The fallback is named `permissions.js`.   
+    The only variable provided is `{{collection}}`, the collections name.
+
+- `abee view` uses two templates.
+  
+  - For the .js file it looks for a template named `<viewName>.js`. The fallback is the standard template named `view.js`.  
+    Use `{{view}}` to get the views name.     
+  - For the .html file it looks for a template named `<viewName>.html`. The fallback is the standard template named `view.html`.   
+     Use `{{view}}` to get the views name.
 
 
 Directory Structure
