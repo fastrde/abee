@@ -19,6 +19,7 @@ var route   = require('./lib/route.js').route;
 var view    = require('./lib/view.js').view;
 var model   = require('./lib/model.js').model;  
 var help    = require('./lib/help.js').help;
+var h       = require('./lib/helper.js').helper;
 var C       = require('./colors.js').colors;
 var cmd     = process.argv[2];
 
@@ -74,7 +75,7 @@ switch(cmd) {
         view.list();
       break;
       default:
-      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
       break;
     }
   break;
@@ -102,7 +103,7 @@ switch(cmd) {
         route.list();
       break;
       default:
-      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
       break;
       
     }
@@ -121,7 +122,7 @@ switch(cmd) {
             try {              
               attr = JSON.parse(attr);
             }catch(e){
-              console.log("The attributes must specified as [attr1,attr2,attr3]");
+              h.print("The attributes must specified as [attr1,attr2,attr3]\n");
               return;
             }
             i=i+1;
@@ -141,7 +142,7 @@ switch(cmd) {
         model.list();
       break;
       default:
-      	console.log("[E]" + C.RED + " subcommand "+subcmd+" unknown."+C.X);
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
       break;
       
     }
