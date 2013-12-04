@@ -1,5 +1,8 @@
 Abee 
 ============================
+
+<h6 style="color:red"> Abee is under heavy development and the version in this repo may not working correctly sometimes. <br> When you want to give Abee a try use the npm version!</h6>
+
 a meteor scaffolding application that
 
 - creates your app and build a *customizable* "best practice" directory structure

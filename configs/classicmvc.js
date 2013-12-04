@@ -1,4 +1,4 @@
-exports.config = {	
+exports.config = {
   structure : {
     'client':{                       // client only
       'css':{},                      // cascading stylesheets
@@ -46,7 +46,6 @@ exports.config = {
     'tests':{}
   },
   dirs: {
-    views: 'client/views',
     subscriptions: 'client/lib/meteor/subscriptions',
     publications:  'server/publications',
     permission: 'server/permissions',
@@ -54,6 +53,26 @@ exports.config = {
   },
   files: {
     routes : 'client/lib/meteor/router.js',
+  },
+  view: {
+    files: [
+      { 
+        'name': '{{filename}}.html',
+        'dir' :'client/views',
+        'template' : {
+          'names': ["{{filename}}.html", "view.html"],
+          'dir'  : ''
+        },
+      },
+      {
+        'name': '{{filename}}.js',
+        'dir' :'client/views',
+        'template' : {
+          'names': ["{{filename}}.js", "view.js"],
+          'dir'  : ''
+        },        
+      }
+    ], 
   } 
  
 };

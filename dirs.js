@@ -15,7 +15,7 @@ exports.dirs = {
       }, 
     },
     'views':{                      // templates
-    	'index.html': "index.html" // start-webpage / layout
+      'index.html': "index.html"   // start-webpage / layout
     },                    
   },
   'lib':{                          // gets loaded first

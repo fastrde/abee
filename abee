@@ -25,6 +25,13 @@ var h       = require('./lib/helper.js').helper;
 var C       = require('./colors.js').colors;
 var cmd     = process.argv[2];
 
+if (cmd != 'create' && !h.checkMeteor()){
+  return;
+}
+if (cmd != 'abeetize' && cmd != 'create'){
+  config.load();
+}
+
 switch(cmd) {
   case "abeetize":
     var appName    = process.argv[3];
@@ -44,9 +51,9 @@ switch(cmd) {
         config.load(configName);
       break;
       case "print":
-      	config.print(configName);
+        config.print(configName);
       break;
- 	}    
+   }    
   break;
   case "template":
   case "view": 
@@ -56,10 +63,10 @@ switch(cmd) {
     switch (subcmd){
       case "add":
         if (process.argv.length == 5){
-      	 viewName = process.argv[4];
-      	 view.add(viewName);
-      	 return;
-      	}
+         viewName = process.argv[4];
+         view.add(viewName);
+         return;
+        }
         for (var i = 4; i < process.argv.length - 1; i++){  
           viewName = process.argv[i];
           if (viewGroup != "."){
@@ -70,11 +77,11 @@ switch(cmd) {
         }
       break;
       case "remove":
-      	if (process.argv.length == 5){
-      	 viewName = process.argv[4];
-      	 view.del(viewName);
-      	 return;
-      	}
+        if (process.argv.length == 5){
+         viewName = process.argv[4];
+         view.del(viewName);
+         return;
+        }
         for (var i = 4; i < process.argv.length - 1; i++){      
           viewName = process.argv[i];
           if (viewGroup != "."){
