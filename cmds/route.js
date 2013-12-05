@@ -13,10 +13,13 @@ module.exports = {
    * @param {Object} attr
    */
   add : function(name, path, template) {
-    if (!template){ 
+    if (!path){
+      template = name;
+      path     = name;  
+    }else if (!template){ 
       template = path;
       path     = name;  
-    }  
+    }
     var entries = config.loadSection('route', {name:name});    
     fsh.addToFilesFromSection(entries, 
       { 

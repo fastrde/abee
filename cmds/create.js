@@ -84,7 +84,7 @@ module.exports = {
    * @param {String} appName name of the app created
    * @param {String} configName name of configuration file to use
    */
-  run: function(appName, configName){ 
+  meteorApp: function(appName, configName){ 
     configName = configName || fallbackConfig;
     if (h.isFile(appName)){
       h.print("Folder " + appName + " already exists. Aborting.\n", "error");

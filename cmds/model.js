@@ -38,21 +38,8 @@ module.exports = {
   	var files = config.loadSection('model', {filename: filename});    
 	fsh.deleteFilesFromSection(files);
   },
-  /**
-   * Lists the model-files
-   */
-  list : function(){
-  	/*
-    var files = fs.readdirSync(modelDir);
-    for (var i = 0; i < files.length; i++){
-      h.print(files[i] + "\n", "info");
-    }
-  	*/
-  },
   help : {'model': "creates a model (adds a collection and some stuff).\n"+
                    "  usage: abee model add <modelName1> ... <modelNameN>\n"+
-                   "         abee model remove <modelName1> ... <modelNameN>\n"+
-                   "         abee model list\n\n"}
-   
-
+                   "         abee model remove <modelName1> ... <modelNameN>\n"
+         }
 };

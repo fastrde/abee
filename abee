@@ -14,24 +14,24 @@
  * for you.
  */
 
-var abee    = require('./lib/abee.js');
+var abee     = require('./lib/abee.js');
 
-var create  = require('./lib/abee.js').create;
-var route   = require('./lib/abee.js').route;
-var view    = require('./lib/abee.js').view;
-var model   = require('./lib/abee.js').model;
-var help    = require('./lib/abee.js').help;
+var create   = require('./lib/abee.js').create;
+var route    = require('./lib/abee.js').route;
+var template = require('./lib/abee.js').template;
+var model    = require('./lib/abee.js').model;
+var help     = require('./lib/abee.js').help;
 
-var config  = require('./lib/config.js');
-var h       = require('./lib/helper.js');
-var C       = require('./lib/colors.js');
+var config   = require('./lib/config.js');
+var h        = require('./lib/helper.js');
+var C        = require('./lib/colors.js');
 
-var cmd     = process.argv[2];
+var cmd      = process.argv[2];
 
-if (cmd != 'create' && !h.checkMeteor()){
+if (cmd && cmd != 'create' && !h.checkMeteor()){
   return;
 }
-if (cmd != 'abeetize' && cmd != 'create'){
+if (cmd && cmd != 'abeetize' && cmd != 'create'){
   config.load();
 }
 
@@ -41,63 +41,55 @@ switch(cmd) {
     var configName = process.argv[4];
     create.abeetize(appName, configName);
   break;
+
   case "create":
     var appName    = process.argv[3];
     var configName = process.argv[4];
-    create.run(appName, configName);
+    create.meteorApp(appName, configName);
   break;
-  case "config":
-    var subcmd     = process.argv[3];
-    var configName = process.argv[4];
-    switch (subcmd){
-      case "load":
-        config.load(configName);
-      break;
-      case "print":
-        config.print(configName);
-      break;
-   }    
-  break;
+
+  /* TODO: Add config list command to show baseconfigs to choose*/
+
   case "template":
   case "view": 
     var subcmd    = process.argv[3];
     var viewName  = "";
     var viewGroup = process.argv[process.argv.length - 1];
     switch (subcmd){
+
       case "add":
         if (process.argv.length == 5){
          viewName = process.argv[4];
-         view.add(viewName);
+         template.add(viewName);
          return;
         }
         for (var i = 4; i < process.argv.length - 1; i++){  
           viewName = process.argv[i];
           if (viewGroup != "."){
-            view.add(viewName, viewGroup);
+            template.add(viewName, viewGroup);
           }else{
-            view.add(viewName);
+            template.add(viewName);
           }
         }
       break;
+
       case "remove":
         if (process.argv.length == 5){
          viewName = process.argv[4];
-         view.del(viewName);
+         template.del(viewName);
          return;
         }
         for (var i = 4; i < process.argv.length - 1; i++){      
           viewName = process.argv[i];
           if (viewGroup != "."){
-            view.del(viewName, viewGroup);
+            template.del(viewName, viewGroup);
           }else{
-            view.del(viewName);
+            template.del(viewName);
           }
 
         }
       break;
-      case "list":
-        view.list();
-      break;
+ 
       default:
         h.print("subcommand " + subcmd + " unknown.\n", "error");
       break;
@@ -107,8 +99,8 @@ switch(cmd) {
   case "route":
     var subcmd    = process.argv[3];
     var routeName = process.argv[4];
-
     switch (subcmd){
+
       case "add":
         for (var i = 4; i < process.argv.length; i++){  
           routeName = process.argv[i];
@@ -118,22 +110,10 @@ switch(cmd) {
           route.add(routeName[0], routeName[1], routeName[2]);
         }
       break;
-      /*case "remove":
-        for (var i = 4; i < process.argv.length; i++){  
-          routeName = process.argv[i];
-          routeName = routeName.split(":");
-          //        name          path          template
-          //   or   path          template      undefined            
-          route.del(routeName[0], routeName[1], routeName[2]);
-        }
-      break;*/
-      case "list":
-        route.list();
-      break;
+
       default:
         h.print("subcommand " + subcmd + " unknown.\n", "error");
-      break;
-      
+      break;      
     }
   break;
 
@@ -160,19 +140,17 @@ switch(cmd) {
           }
         }
       break;
+
       case "remove":
         for (var i = 4; i < process.argv.length; i++){  
           modelName = process.argv[i];
           model.del(modelName);
         }
       break;
-      case "list":
-        model.list();
-      break;
+
       default:
         h.print("subcommand " + subcmd + " unknown.\n", "error");
-      break;
-      
+      break;      
     }
   break;
 

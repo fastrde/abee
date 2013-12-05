@@ -3,6 +3,8 @@ Abee
 
 <h6 style="color:red"> Abee is under heavy development and the version in this repo may not working correctly sometimes. <br> When you want to give Abee a try use the npm version!</h6>
 
+<h6 style="color:red"> Documentation is outdated. Call abee without parameters to get help.</h6>
+
 a meteor scaffolding application that
 
 - creates your app and build a *customizable* "best practice" directory structure
@@ -12,7 +14,7 @@ a meteor scaffolding application that
 - generates allow/deny stubs for your collections
 - adds basic routes in the url -> view/template style
 
-Abee is using **Handlebars** to manage the templates, so you doesn't have to learn something new when you already know meteor.
+Abee uses **Handlebars** to manage the templates, so you doesn't have to learn something new when you already know meteor.
 
 Installation
 ----------------
@@ -34,7 +36,7 @@ I don't want to write the same stuff over and over again. Due to the structure o
 Usage
 ---------
 
-Abee operates in your app-directory (the place where you call meteor to start your app). The two exceptions are `create` because there is no app-directory before you call `create` ;-) and `abeetize` with a parameter.
+Abee operates in your app-directory (the place where you call meteor to start your app). The only exception is `create` because there is no app-directory before you call `create` ;-).
 
 **usage: abee command [subcommand] [options]**
 
@@ -42,8 +44,7 @@ commands:
 
 ### abeetize
 
-    $ abee abeetize                    #called IN app-directory
-    $ abee abeetize <YourMeteorApp>    #called like create 
+    $ abee abeetize
     
 Extends your meteor app with the in section "Directory Structure" listed structure.
 
