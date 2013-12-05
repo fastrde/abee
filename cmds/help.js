@@ -1,6 +1,6 @@
-var h = require("../lib/helper.js").helper;
+var h = require("../lib/helper.js");
 
-exports.help = {
+module.exports = {
   /**
    * shows the help
    */

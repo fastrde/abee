@@ -1,12 +1,12 @@
 var fs      = require('fs');
 var exec    = require('child_process').exec;
 
-var config  = require('./config.js').config;
+var config  = require('./config.js');
 
-var fsh     = require('../lib/fshelper.js').fshelper;
-var tph     = require('../lib/tplhelper.js').tplhelper;
-var h       = require('../lib/helper.js').helper;
-var C       = require('../lib/colors.js').colors;
+var fsh     = require('../lib/fshelper.js');
+var tph     = require('../lib/tplhelper.js');
+var h       = require('../lib/helper.js');
+var C       = require('../lib/colors.js');
 
 /**
  * when no config is chosen pick this.
@@ -79,7 +79,7 @@ var loadStructure = function(){
   return dirs;   
 };
 
-exports.create = {
+module.exports = {
   /**
    * creates the meteor-app and the directory-structure 
    * @param {String} appName name of the app created

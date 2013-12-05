@@ -1,14 +1,14 @@
 var fs       = require('fs');
 
-var config   = require('./config.js').config;
+var config   = require('./config.js');
 
-var h        = require('../lib/helper.js').helper;
-var fsh      = require('../lib/fshelper.js').fshelper;
-var tplh     = require('../lib/tplhelper.js').tplhelper;
-var C        = require('../lib/colors.js').colors;
+var h        = require('../lib/helper.js');
+var fsh      = require('../lib/fshelper.js');
+var tplh     = require('../lib/tplhelper.js');
+var C        = require('../lib/colors.js');
 
  
-exports.model = {
+module.exports = {
   /**
    * adds a model with the given attributes to the meteor app
    * @param {Object} model

@@ -1,4 +1,4 @@
-exports.config = {
+module.exports = {
   structure : {
     'client':{                       // client only
       'css':{},                      // cascading stylesheets

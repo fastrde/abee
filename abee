@@ -14,15 +14,15 @@
  * for you.
  */
 
-var create  = require('./cmds/create.js').create;
-var config  = require('./cmds/config.js').config;
-var route   = require('./cmds/route.js').route;
-var view    = require('./cmds/view.js').view;
-var model   = require('./cmds/model.js').model;  
-var help    = require('./cmds/help.js').help;
+var create  = require('./cmds/create.js');
+var config  = require('./cmds/config.js');
+var route   = require('./cmds/route.js');
+var view    = require('./cmds/view.js');
+var model   = require('./cmds/model.js');  
+var help    = require('./cmds/help.js');
 
-var h       = require('./lib/helper.js').helper;
-var C       = require('./lib/colors.js').colors;
+var h       = require('./lib/helper.js');
+var C       = require('./lib/colors.js');
 
 var cmd     = process.argv[2];
 

@@ -1,12 +1,12 @@
 var fs       = require('fs');
 
-var config   = require('./config.js').config;
+var config   = require('./config.js');
 
-var fsh      = require('../lib/fshelper.js').fshelper;
-var h        = require('../lib/helper.js').helper;
-var C        = require('../lib/colors.js').colors;
+var fsh      = require('../lib/fshelper.js');
+var h        = require('../lib/helper.js');
+var C        = require('../lib/colors.js');
  
-exports.route = {
+module.exports = {
 
   /**
    * adds a route with the given to the meteor app

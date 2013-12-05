@@ -1,11 +1,11 @@
 var fs     = require('fs');
 
-var config = require('./config.js').config;
+var config = require('./config.js');
 
-var fsh    = require('../lib/fshelper.js').fshelper;
-var tph    = require('../lib/tplhelper.js').tplhelper;
-var h      = require('../lib/helper.js').helper;
-var C      = require('../lib/colors.js').colors;
+var fsh    = require('../lib/fshelper.js');
+var tph    = require('../lib/tplhelper.js');
+var h      = require('../lib/helper.js');
+var C      = require('../lib/colors.js');
 
 var addGroupToFiles = function(files, group){
   for (var i = 0; i < files.length; i++) {
@@ -21,7 +21,7 @@ var addGroupToFiles = function(files, group){
   return files;
 };
 
-exports.view = {
+module.exports = {
   /**
    * adds a template/view to the meteor app
    * @param {Object} view

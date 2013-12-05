@@ -1,8 +1,8 @@
-var h   = require('../lib/helper.js').helper;
-var fsh = require('../lib/fshelper.js').fshelper;
-var tph = require('../lib/tplhelper.js').tplhelper;
+var h   = require('../lib/helper.js');
+var fsh = require('../lib/fshelper.js');
+var tph = require('../lib/tplhelper.js');
 
-exports.config = {
+module.exports = {
   
   /**
    * holds the configuration-Object 
@@ -20,7 +20,7 @@ exports.config = {
    */
   load: function(name){
     try {
-      this._config = require(h.appDir() + "/.abee/config.js").config;
+      this._config = require(h.appDir() + "/.abee/config.js");
       this._configName = ".local";
     }catch(e){
       try{
@@ -38,7 +38,7 @@ exports.config = {
    */
   loadBaseConfig: function(name){
     try {
-      this._config = require("../configs/" + name + ".js").config;
+      this._config = require("../configs/" + name + ".js");
       this._configName = name;
     } catch(e) {
       h.print("config " + name + " not found!\n", "error");

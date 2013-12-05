@@ -1,4 +1,4 @@
-exports.config = {
+module.exports = {
 	structure : {
 		'client' : {
 			'views' : {},
