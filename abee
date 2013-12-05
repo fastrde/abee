@@ -110,16 +110,20 @@ switch(cmd) {
         for (var i = 4; i < process.argv.length; i++){  
           routeName = process.argv[i];
           routeName = routeName.split(":");
-          route.add(routeName[0], routeName[1]);
+          //        name          path          template
+          //   or   path          template      undefined  
+          route.add(routeName[0], routeName[1], routeName[2]);
         }
       break;
-      case "remove":
+      /*case "remove":
         for (var i = 4; i < process.argv.length; i++){  
           routeName = process.argv[i];
           routeName = routeName.split(":");
-          route.del(routeName[0], routeName[1]);
+          //        name          path          template
+          //   or   path          template      undefined            
+          route.del(routeName[0], routeName[1], routeName[2]);
         }
-      break;
+      break;*/
       case "list":
         route.list();
       break;

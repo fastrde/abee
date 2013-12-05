@@ -6,7 +6,7 @@ exports.config = {
       'lib':{                        // gets loaded first
         'helpers':{},                // client-side helper methods
         'meteor':{  
-          'router.js': null,         // client-side routing
+          'router.js': "router.js",  // client-side routing
           'startup.js': null,        // run on new client init
           'subscriptions': {},       // Subscribe to data
         }, 
@@ -54,8 +54,8 @@ exports.config = {
   files: {
     routes : 'client/lib/meteor/router.js',
   },
-  view: {
-    files: [
+  view: {  
+    createFiles: [
       { 
         'name': '{{filename}}.html',
         'dir' :'client/views',
@@ -75,7 +75,7 @@ exports.config = {
     ], 
   },
   model: {
-  	files: [
+  	createFiles: [
       { 
         'name': '{{filename}}Model.js',
         'dir' :'lib/models',
@@ -108,8 +108,20 @@ exports.config = {
           'dir'  : ''
         },
       },
-
   	]
-  } 
- 
+  },
+  route: { 
+    addToFiles:[
+      {
+        'file' : 'router.js',
+        'mark' : '//ABEE:ADDROUTE',
+        'dir'  : 'client/lib/meteor',
+        'template' : {
+          'names' : ["{{name}}Route.js", "route.js"],
+          'dir' : ''
+        }
+      }
+    ]
+  }
+
 };
