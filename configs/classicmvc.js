@@ -44,9 +44,9 @@ module.exports = {
       'publications':{},             // Individual files for the type of data
       'permissions':{},
     },
-    'tests':{}
+    'test':{}
   },
-  dirs: {
+/*  dirs: {
     subscriptions: 'client/lib/meteor/subscriptions',
     publications:  'server/publications',
     permission: 'server/permissions',
@@ -55,7 +55,7 @@ module.exports = {
   files: {
     routes : 'client/lib/meteor/router.js',
   },
-  view: {  
+*/  view: {  
     createFiles: [
       { 
         'name': '{{filename}}.html',

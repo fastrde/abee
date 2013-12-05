@@ -15,10 +15,12 @@ module.exports = {
   add : function(name, path, template) {
     if (!path){
       template = name;
-      path     = name;  
+      path     = name.replace(/^\/*/, "/");
+      name     = name.replace(/^\/*/, "");  
     }else if (!template){ 
       template = path;
-      path     = name;  
+      path     = name.replace(/^\/*/, "/");  
+      name     = name.replace(/^\/*/, ""); 
     }
     cmd.addFromConfig(config.get('route'), {name: name},
     { 

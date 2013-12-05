@@ -1,5 +1,5 @@
 this.route('{{name}}', {
-    path: '/{{path}}',
+    path: '{{path}}',
     template: '{{template}}',
     before: function(){
     }

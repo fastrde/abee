@@ -34,7 +34,10 @@ if (cmd && cmd != 'create' && !h.checkMeteor()){
 if (cmd && cmd != 'abeetize' && cmd != 'create'){
   config.load();
 }
-
+if (cmd && cmd == 'create' && h.isMeteor()){
+ h.print("already a meteor app in this directory\n", "error");
+ return;
+}
 switch(cmd) {
   case "abeetize":
     var appName    = process.argv[3];
