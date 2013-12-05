@@ -97,11 +97,11 @@ module.exports = {
     exec('meteor create ' + appName, function(error, stdout, stderr) {
       h.print(stderr, "meteor");
       h.print("Directory Structure is:\n", "info");
+      config.addToProject(appName, configName);
       generateStructure(dirs, appName, appName, 0);
       try{
         removeInsecureModules(appName);
         removeFirstFiles(appName);
-        config.addToProject(appName, configName);
       }catch(e){
         console.log(e);
       }
@@ -121,9 +121,9 @@ module.exports = {
     global.generatedAppName = "."; //TODO: have to be global? think about it.
     
     h.print("Abeetize " + appName + "\n", "important");
+    config.addToProject(".", configName);
     var dirs = loadStructure(configName);    
     generateStructure(dirs, ".", ".", 0);
-    config.addToProject(".", configName);
   },
   help: {
     'abeetize': "extends your app with a \"best practice\" directory structure. Does nothing else.\n" +

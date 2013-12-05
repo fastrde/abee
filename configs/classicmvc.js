@@ -1,4 +1,5 @@
 module.exports = {
+  name: 'classicmvc',                // name of the configuration
   structure : {
     'client':{                       // client only
       'css':{},                      // cascading stylesheets
@@ -61,7 +62,7 @@ module.exports = {
         'dir' :'client/views',
         'template' : {
           'names': ["{{filename}}.html", "view.html"],
-          'dir'  : ''
+          'dir'  : 'views'
         },
       },
       {
@@ -123,5 +124,4 @@ module.exports = {
       }
     ]
   }
-
 };
