@@ -1,10 +1,10 @@
 var fs       = require('fs');
 
-var h        = require('./helper.js').helper;
-var fsh      = require('./fshelper.js').fshelper;
-var tplh     = require('./tplhelper.js').tplhelper;
 var config   = require('./config.js').config;
-var C        = require('../colors.js').colors;
+
+var fsh      = require('../lib/fshelper.js').fshelper;
+var h        = require('../lib/helper.js').helper;
+var C        = require('../lib/colors.js').colors;
  
 exports.route = {
 

@@ -14,15 +14,16 @@
  * for you.
  */
 
-var create  = require('./lib/create.js').create;
-var config  = require('./lib/config.js').config;
-var route   = require('./lib/route.js').route;
-var view    = require('./lib/view.js').view;
-var model   = require('./lib/model.js').model;  
-var help    = require('./lib/help.js').help;
+var create  = require('./cmds/create.js').create;
+var config  = require('./cmds/config.js').config;
+var route   = require('./cmds/route.js').route;
+var view    = require('./cmds/view.js').view;
+var model   = require('./cmds/model.js').model;  
+var help    = require('./cmds/help.js').help;
 
 var h       = require('./lib/helper.js').helper;
-var C       = require('./colors.js').colors;
+var C       = require('./lib/colors.js').colors;
+
 var cmd     = process.argv[2];
 
 if (cmd != 'create' && !h.checkMeteor()){

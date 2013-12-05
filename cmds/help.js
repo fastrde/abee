@@ -1,4 +1,5 @@
-var h = require("./helper.js").helper;
+var h = require("../lib/helper.js").helper;
+
 exports.help = {
   /**
    * shows the help

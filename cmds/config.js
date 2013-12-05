@@ -1,6 +1,6 @@
-var h   = require('./helper.js').helper;
-var fsh = require('./fshelper.js').fshelper;
-var tph = require('./tplhelper.js').tplhelper;
+var h   = require('../lib/helper.js').helper;
+var fsh = require('../lib/fshelper.js').fshelper;
+var tph = require('../lib/tplhelper.js').tplhelper;
 
 exports.config = {
   
@@ -128,7 +128,7 @@ exports.config = {
   addToProject: function(appName, configName){  
     try{
       fsh.mkdir(appName + "/.abee");
-      fsh.cpfile(__dirname + "/../configs/"+ configName + ".js", appName + "/.abee/config.js");
+      fsh.cpfile(__dirname + "/../configs/"+ configName + ".js", appName + "/.abee/config.js"); //TODO: remove __dirname? 
     }catch(e){
       console.log(e);
     }

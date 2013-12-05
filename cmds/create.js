@@ -1,10 +1,12 @@
 var fs      = require('fs');
 var exec    = require('child_process').exec;
+
 var config  = require('./config.js').config;
-var fsh     = require('./fshelper.js').fshelper;
-var tph     = require('./tplhelper.js').tplhelper;
-var h       = require('./helper.js').helper;
-var C       = require('../colors.js').colors;
+
+var fsh     = require('../lib/fshelper.js').fshelper;
+var tph     = require('../lib/tplhelper.js').tplhelper;
+var h       = require('../lib/helper.js').helper;
+var C       = require('../lib/colors.js').colors;
 
 /**
  * when no config is chosen pick this.

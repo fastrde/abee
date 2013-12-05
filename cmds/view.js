@@ -1,11 +1,11 @@
 var fs     = require('fs');
-var tplDir = require('../dirs.js').views;
-var h      = require('./helper.js').helper;
-var fsh    = require('./fshelper.js').fshelper;
-var tph    = require('./tplhelper.js').tplhelper;
-var C      = require('../colors.js').colors;
 
 var config = require('./config.js').config;
+
+var fsh    = require('../lib/fshelper.js').fshelper;
+var tph    = require('../lib/tplhelper.js').tplhelper;
+var h      = require('../lib/helper.js').helper;
+var C      = require('../lib/colors.js').colors;
 
 var addGroupToFiles = function(files, group){
   for (var i = 0; i < files.length; i++) {
