@@ -1,11 +1,10 @@
-var fs       = require('fs');
+var fs      = require('fs');
 
-var config   = require('./config.js');
-
-var h        = require('../lib/helper.js');
-var fsh      = require('../lib/fshelper.js');
-var tplh     = require('../lib/tplhelper.js');
-var C        = require('../lib/colors.js');
+var config  = require('../lib/config.js');
+var h       = require('../lib/helper.js');
+var fsh     = require('../lib/fshelper.js');
+var tplh    = require('../lib/tplhelper.js');
+var C       = require('../lib/colors.js');
 
  
 module.exports = {

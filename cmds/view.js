@@ -1,7 +1,6 @@
 var fs     = require('fs');
 
-var config = require('./config.js');
-
+var config = require('../lib/config.js');
 var fsh    = require('../lib/fshelper.js');
 var tph    = require('../lib/tplhelper.js');
 var h      = require('../lib/helper.js');

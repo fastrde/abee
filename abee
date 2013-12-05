@@ -14,13 +14,15 @@
  * for you.
  */
 
-var create  = require('./cmds/create.js');
-var config  = require('./cmds/config.js');
-var route   = require('./cmds/route.js');
-var view    = require('./cmds/view.js');
-var model   = require('./cmds/model.js');  
-var help    = require('./cmds/help.js');
+var abee    = require('./lib/abee.js');
 
+var create  = require('./lib/abee.js').create;
+var route   = require('./lib/abee.js').route;
+var view    = require('./lib/abee.js').view;
+var model   = require('./lib/abee.js').model;
+var help    = require('./lib/abee.js').help;
+
+var config  = require('./lib/config.js');
 var h       = require('./lib/helper.js');
 var C       = require('./lib/colors.js');
 
