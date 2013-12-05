@@ -40,7 +40,7 @@ exports.config = {
         'startup.js': null           // Run on server startup
       },      
       'models':{},                   // Server-only Meteor.methods
-      'publish':{},                  // Individual files for the type of data
+      'publications':{},             // Individual files for the type of data
       'permissions':{},
     },
     'tests':{}
@@ -73,6 +73,43 @@ exports.config = {
         },        
       }
     ], 
+  },
+  model: {
+  	files: [
+      { 
+        'name': '{{filename}}Model.js',
+        'dir' :'lib/models',
+        'template' : {
+          'names': ["{{filename}}Model.js", "model.js"],
+          'dir'  : ''
+        },
+      },
+      { 
+        'name': '{{filename}}Subscription.js',
+        'dir' :'client/lib/meteor/subscriptions',
+        'template' : {
+          'names': ["{{filename}}Subscription.js", "subscription.js"],
+          'dir'  : ''
+        },
+      },
+      { 
+        'name': '{{filename}}Publish.js',
+        'dir' :'server/publications',
+        'template' : {
+          'names': ["{{filename}}Publish.js", "publish.js"],
+          'dir'  : ''
+        },
+      },
+      { 
+        'name': '{{filename}}Permissions.js',
+        'dir' :'server/permissions',
+        'template' : {
+          'names': ["{{filename}}Permissions.js", "permissions.js"],
+          'dir'  : ''
+        },
+      },
+
+  	]
   } 
  
 };
