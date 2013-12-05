@@ -124,5 +124,12 @@ module.exports = {
     var dirs = loadStructure(configName);    
     generateStructure(dirs, ".", ".", 0);
     config.addToProject(".", configName);
+  },
+  help: {
+    'abeetize': "extends your app with a \"best practice\" directory structure. Does nothing else.\n" +
+                "  usage: abee abeetize <appName>\n\n",
+    'create':   "creates an app like meteor does, but extends it with a \"best practice\" directory structure.\n" +
+                "  usage: abee create <appName>\n\n"
   }
+  
 };

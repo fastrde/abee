@@ -25,33 +25,8 @@ module.exports = {
         template:template
       });
   },
-
-  /**
-   * deletes the model with the the name "model"
-   * @param {Object} model
-   */
-  /*del : function(name, path, template){
-    if (!template){ 
-      template = path;
-      path     = name;  
-    }  
-    var entries = config.loadSection('route', {name:name});    
-    fsh.removeFromFilesFromSection(entries, 
-      { 
-        name:name, 
-        path:path, 
-        template:template
-      });
-  },*/
-  /**
-   * Lists the model-files
-   */
-  list : function(){
-    /*
-    var files = fs.readdirSync(modelDir);
-    for (var i = 0; i < files.length; i++){
-      h.print(files[i] + "\n", "info");
-    }
-    */
+  help : {'route': "creates a route\n" +
+                   "  usage: abee route add [<name1>:]<path1>[:<template1>] ... [<nameN>:]<pathN>[:<templateN>]\n\n"
+                  
   }
 };

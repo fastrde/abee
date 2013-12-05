@@ -48,5 +48,11 @@ module.exports = {
       h.print(files[i] + "\n", "info");
     }
   	*/
-  }
+  },
+  help : {'model': "creates a model (adds a collection and some stuff).\n"+
+                   "  usage: abee model add <modelName1> ... <modelNameN>\n"+
+                   "         abee model remove <modelName1> ... <modelNameN>\n"+
+                   "         abee model list\n\n"}
+   
+
 };

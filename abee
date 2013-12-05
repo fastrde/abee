@@ -178,7 +178,7 @@ switch(cmd) {
 
   case "help":
   default:
-    help.run();
+    help();
   break;
 }
 

@@ -46,24 +46,10 @@ module.exports = {
     }
     fsh.deleteFilesFromSection(files);
   },
-  
-  /**
-   * lists the files in the template/view directory
-   */
-  list : function(){
-  	/* can't figure out at the moment how to find views... */
-  	
-  	/*var files = config.loadFileSection('view', "");
-		for (var i = 0; i < files.length; i++) {
-			var file = files[i];
-			try {
-				var files = fs.readdirSync(files.dir);
-				for (var i = 0; i < files.length; i++){
-      				h.print(files[i] + "\n", "info");
-    			}
-			} catch(e) {
-				console.log(e);
-			}
-		}*/
-   }
+  help: {'template': "creates a template in the clients template (default: client/views) directory.\n" +
+                     "  usage: abee template add <templateName1> ... <templateNameN> <templateGroup>\n" +
+                     "         abee template remove <templateName1> ... <templateNameN> <templateGroup>\n\n"+
+                     "  hint:  insert a . as templateGroup to omit templateGroup\n\n",
+         'view':     "same as template.\n\n"
+        }
 };
