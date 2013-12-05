@@ -1,20 +1,24 @@
 Abee 
 ============================
 
-<h6 style="color:red"> Abee is under heavy development and the version in this repo may not working correctly sometimes. <br> When you want to give Abee a try use the npm version!</h6>
+Abee is a meteor scaffolding application that allows you to use your own (or the build-in) design patterns to build a great meteor app in less time.
 
-<h6 style="color:red"> Documentation is outdated. Call abee without parameters to get help.</h6>
+Abee
 
-a meteor scaffolding application that
+- creates your app and build a "best practice" directory structure that you can choose from different configurations. 
+- extends your existing meteor app.
+- uses **Handlebars**, so you don't have to learn new stuff.
+- adds/removes *customizable* views/templates to/from your app.
+- adds/removes *template based* models/collections, client-subscriptions and server-publications.
+- generates allow/deny stubs for your collections.
+- adds routes.
 
-- creates your app and build a *customizable* "best practice" directory structure
-- extends your existing app.
-- adds/removes *customizable* views/templates to/from your app
-- adds/removes *template based* models with proper collection, client-subscription and server-publish
-- generates allow/deny stubs for your collections
-- adds basic routes in the url -> view/template style
+**You can configure what is** a model or a view, so Abee produces what you think it should.
 
-Abee uses **Handlebars** to manage the templates, so you doesn't have to learn something new when you already know meteor.
+Why?
+--------
+
+I am to lazy to don't write the same stuff over and over again. Due to the structure of a meteor-app you have to do this stuff in multiple directories and/or multiple files. So i decided to let a bit of software do that work.
 
 Installation
 ----------------
@@ -28,11 +32,6 @@ To update:
 
     $ npm update -g abee
 
-Why?
---------
-
-I don't want to write the same stuff over and over again. Due to the structure of a meteor-app you have to do this stuff in multiple directories and/or multiple files. So i decided to let a bit of software do that work.
-
 Usage
 ---------
 
@@ -42,70 +41,66 @@ Abee operates in your app-directory (the place where you call meteor to start yo
 
 commands:
 
-### abeetize
+#### abeetize
 
-    $ abee abeetize
+    $ abee abeetize <?design-pattern>
     
-Extends your meteor app with the in section "Directory Structure" listed structure.
+Extends your meteor app with Abees scaffolding capabilities and generate the chosen directory structure.
 
-### create   
+#### create   
 
-    $ abee create <YourAppName>  
+    $ abee create <YourAppName> <?design-pattern>
     
-Creates an app like meteor does, but extends it with a (configurable) "best practice" directory structure.
-When you call `create` the `dirs.js` in the abee directory is parsed and the structure is created for you.
+Creates meteor app like meteor does, but abeetizes it.
 
-### help 
+#### help 
                  
     $ abee help
     
 prints help message.
  
-### model     
+#### model     
  
-    $ abee model add <modelName1> [attribute1,..attributeN] ... <modelNameN> [attribute1,..attributeN]
+    $ abee model add <modelName1> [attribute1,..,attributeN] ... <modelNameN> [attribute1,..,attributeN]
     $ abee model remove <modelName1> ... <modelNameN>
-    $ abee model list
     
-creates a model, adds a collection, client-side subscription, server-side publish and permissions.
+creates a model, (and in the standard configuration) adds a collection, client-side subscriptions, server-side publications and permissions.
 
-### view (or template)    
+#### template 
      
-    $ abee view add <templateName1> ... <templateNameN> <templateGroup>
-    $ abee view remove <templateName1> ... <templateNameN> <templateGroup>
-    $ abee view list
-
-
-
-    
+    $ abee template add <templateName1> ... <templateNameN> <templateGroup>
+    $ abee template remove <templateName1> ... <templateNameN> <templateGroup>
+   
 creates a template in the clients template directory.  
 *hint: insert a ```.``` as templateGroup or add only one template to omit templateGroup.*
 
-### route       
-
-
-    $ abee route add <url1>[:<view1>] ... <urlN>[:<viewN>]
-    $ abee route remove <url1>[:<view1>] ... <urlN>[:<viewN>]
+#### route   
     
-creates a route (when meteor-router is used)
+    $ abee route add <path1> ... <pathN>
+    $ abee route add <path1>:<template1> ... <pathN>:<templateN>
+    $ abee route add <name1>:<path1>:<template1> ... <nameN>:<pathN>:<viewN>
+    
+    $ abee route add <name1> ... <name273>:<path273>:<template273> ... <pathN>:<templateN>
+        
+creates a route.
  
-Usage Examples
---------------
-Extends app "someHotStuff" with "best practice" directory structure
+### Usage Examples
 
-    $ abee abeetize someHotStuff
+Extends app "someHotStuff" with the classicmvc design-pattern
+
+    $ abee abeetize someHotStuff classicmvc
 
 Create a new app named "someHotStuff" with "best practice" directory structure
 
-    $ abee create someHotStuff
+    $ abee create someHotStuff //default config is classicmvc so you don't have to write it
 
-Create 3 views named login, logout and forgotPassword in group usermgr
+Create 3 templates named login, logout and forgotPassword in group usermgr
 
-    $ abee view add login logout forgotPassword usemgr
+    $ abee templates add login logout forgotPassword usemgr
 
-Create 2 views (foo and bar) directly in the view directory
+Create 2 templates (foo and bar) directly in the view directory
 
-    $ abee view add foo bar .
+    $ abee templates add foo bar .
 
 Create 2 models (user and post), 2 collection, 2 subscriptions and 2 publishs  
     
@@ -119,96 +114,138 @@ Remove models user and post
 
     $ abee model remove user post
 
-dirs.js
---------------------------
-`dirs.js` describes the directory-structure that is build when you call `abee create`
+Creates a route with name 'name', path '/path' and template 'template' and another one with name1,/path1 and template1
 
-    'dirName':{},  //creates an empty directory
-    'dirName2' :{  //creates an directory with an subdirectory called subDir
-      'subDir': {}
+    $ abee route add name:path:template  name1:path1:template1 
+
+inside Abee
+-----------------
+
+### Directory structure
+the abee directory looks like this
+
+    -- abee             
+     |-- cmds               // commands that added here where automaticaly load by Abee
+     | |-- create.js
+     | |-- model.js
+     | |-- route.js
+     | |-- template.js
+     |
+     |-- configs            // this folder holds the configurations for the design-patterns
+     | |-- classicmvc.js    // classical MVC configuration like ruby on rails
+     | 
+     |-- lib                // core libaries and helper functions
+     | |-- abee.js          
+     | |-- colors.js
+     | |-- config.js
+     | |-- fshelper.js
+     | |-- helper.js
+     | |-- tplhelper.js
+     |
+     |-- templates          // here is the directory to store the templates for different 
+     | |-- classicmvc       // design-patterns. First Abee looks for the templates specified 
+     |   |-- index.html     // in the config in the subfolder of the same name as the config.
+     |   |-- model.js       // After that Abee searchs in the main templates folder.
+     |   |-- permissions.js
+     |   |-- publish.js
+     |   |-- route.js
+     |   |-- router.js
+     |   |-- subscription.js
+     |   |-- view.html
+     |   |-- view.js
+     |
+     |-- abee                // the command-line interface
+     |-- LICENSE             // license file
+     |-- package.json        // npm description
+     |-- README.md           // this file
+     
+### Design pattern config
+
+    name: 'classicmvc',               // name of the configuration 
+                                      // (same as filename without .js)
+    structure:{                       // the file and directory structure
+      'emptyDir':{},                  // empty directory
+      'dir':{                         // directory
+        'subdir':{},                  // empty subdirectory
+        'emptyFile.ext': null.         // empty file
+        'fromTpl.ext': 'template.ext' // generates fromTpl.ext with 
+                                      // template.ext as template
+      }
     },
-    'fileName.ext': null, //creates an empty file
-    'fileName2.ext': "templateName", //uses template 'templateName' for file
-
+    <command>:{                       // config section for the <command> (for example 'model')
+      createFiles: [                  // this files will be generated when 
+      {                               // '<command> add' is called
+        'name': '{{filename}}.html',  // name of the file
+        'dir' :'client/views',        // directory to store file
+        'template' : {          
+          'names': ["{{filename}}.html", "view.html"], // look for these templates in the template dir
+                                                       // pick the first that matchs
+          'dir'  : ''                 // subdirectory in template dir (not implemented yet)!
+        },
+      },
+      {
+       ... (nextFile)
+      }],
+      addToFiles:[                    // this adds code snippets to 
+      {
+        'file' : 'router.js',         // this file
+        'dir'  : 'client/lib/meteor', // in this directory
+        'mark' : '//ABEE:ADDROUTE',   // above this mark 
+        'template' : {
+          'names' : ["{{name}}Route.js", "route.js"], //here are the snippets templates
+          'dir' : ''                  // subdirectory in template dir (not implemented yet)!
+        }
+      },
+      {
+        ... (nextSnippet)
+      }]
+    },
+    <nextcommand>:{
+      ...
+    }
 
 Templates
---------------------------
-Abee creates files by handlebars-templates, so that's the same what you, as meteor developer, already know. 
+_________
+        Model : h.capitalize(filename),
+        model : filename.toLowerCase(),
+        attr  : attrParsed,
+        collection: h.capitalize(filename) + "Collection",   		 
 
-- `abee create` parses the `dirs.js` file and generates files from templates when a templateName is specified.  
-  Use `{{appName}}` in your templates to display yours app actual name.
+<table>
+<tr><th>command</th><th colspan="2">config vars</th><th colspan="2">template vars</th></tr>
+<tr>
+ <th>create</th>
+ <td></td><td></td>
+ <td>{{appName}}</td><td>name of your app</td>
+</tr>
 
-- `abee model` uses a lot of templates.
-  - For models it looks for a template named `<modelName>Model.js`.  The fallback is the standard template named `model.js`.  
-    It provides the name of the model as `{{model}}`,  
-    the capitalized name as `{{Model}}`   
-    and all attributes given at the command-line in `{{attr}}`.  
-    Each attribute has `{{name}}` as name and `{{Name}}` as capitalized name.
+<tr>
+ <th rowspan="4">model</th>
+ <td rowspan="4">{{filename}}</td><td rowspan="4">name of the model</td>
+ <td>{{Model}}</td><td>capitalized name of your model</td>
+ </td>
+</tr>
+<tr><td>{{model}}</td><td>name of your model in lowercase</td></tr>
+<tr><td>{{attr}}</td><td>attributes of the model <br>{{name}} (lowercase) and <br>{{Name}} (capitalized) available</td></tr>
+<tr><td>{{collection}}</td><td>name of the collection <br>(equal to '{{Model}}Collection')</td></tr>
 
-  - For subscriptions it looks for a template named  `<modelName>Subscription.js`. The fallback is `subscription.js`.   
-    Only variable passed is `{{model}}`, the lowercase modelName.
+<tr>
+ <th rowspan="3">route</th>
+ <td rowspan="3">{{name}}</td><td rowspan="3">name of the route</td>
+ <td>{{name}}</td><td>name of the route</td>
+ </td>
+</tr>
+<tr><td>{{path}}</td><td>path that is routed</td></tr>
+<tr><td>{{template}}</td><td>template to render</td></tr>
 
-  - For publish it looks for a template named `<modelName>Publish.js`. The fallback is `publish.js`.  
-    It provides the lowercase modelName `{{model}}`  
-    and the name of the collection in `{{collection}}`.
+<tr>
+ <th rowspan="2">template</th>
+ <td>{{filename}}</td><td>name of the template</td>
+ <td rowspan="2">{{view}}</td><td rowspan="2">name of the view</td>
+</tr>
+<tr><td>{{group}}</td><td>group for the views (when delivered)</td></tr>
+</table>
 
-  - For permissions it looks for a template named `<modelName>Permissions.js`.  
-    The fallback is named `permissions.js`.   
-    The only variable provided is `{{collection}}`, the collections name.
-
-- `abee view` uses two templates.
-  
-  - For the .js file it looks for a template named `<viewName>.js`. The fallback is the standard template named `view.js`.  
-    Use `{{view}}` to get the views name.     
-  - For the .html file it looks for a template named `<viewName>.html`. The fallback is the standard template named `view.html`.   
-     Use `{{view}}` to get the views name.
-
-
-Directory Structure
----------------------------
-
-    |-- client                // client only directory
-    | |-- css                 // cascading stylesheets
-    | |-- js                  // thirdparty libraries
-    | |-- lib                 // gets loaded first
-    | | |-- helpers           // client-side helper methods
-    | | |-- meteor            // meteor specific client data
-    | |   |-- subscriptions   // subscribe to data
-    | |   |-- router.js       // client-side routing
-    | |   |-- startup.js      // run on new client init
-    | |
-    | |-- views               // views / templates 
-    |   |-- index.html        // startpoint for your client templates
-    |
-    |-- lib                   // gets loaded first
-    | |-- helpers             // client AND server helpers
-    | |-- models              // models  
-    |
-    |-- packages              // smart packages from atmosphere 
-    |-- private               // privates assets like email-templates
-    |-- public                // public assets
-    | |-- img
-    | |-- fonts
-    | |-- js
-    |
-    |-- server                // server only code
-    | |-- api                 // REST API (optional)
-    | |-- config
-    | | |-- accounts.js       // Accounts.config(), etc.
-    | | |-- users.js          // Accounts.onCreateUser(), etc.
-    | |
-    | |-- helpers             // server-side helper functions
-    | |-- lib                 // what should get loaded first
-    | | |-- settings.js       // load into Meteor.settings
-    | | |-- packages.js       // instantiate your npm modules
-    | | |-- startup.js        // run on server startup
-    | |
-    | |-- models              // server-only Meteor.methods
-    | |-- publish             // individual files for the type of data
-    | |-- permissions         // permissions for collections goes here
-    |
-    |-- tests                 // unittests, functiontests, etc
- 
 License
 ------
 MIT
