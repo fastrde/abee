@@ -23,7 +23,6 @@ var collection = require('./lib/abee.js').collection;
 var help       = require('./lib/abee.js').help;
 var page       = require('./lib/abee.js').page;
 
-var config     = require('./lib/config.js');
 var h          = require('./lib/helper.js');
 var C          = require('./lib/colors.js');
 
@@ -31,9 +30,6 @@ var cmd        = process.argv[2];
 
 if (cmd && cmd != 'create' && !h.checkMeteor()){
   return;
-}
-if (cmd && cmd != 'abeetize' && cmd != 'create'){
-  config.load();
 }
 if (cmd && cmd == 'create' && h.isMeteor()){
  h.print("already a meteor app in this directory\n", "error");
