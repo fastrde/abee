@@ -1,0 +1,20 @@
+{{!-- path:/client/models/page.{{page}}.html --}}
+
+<template name="{{page}}Page">
+  <div id="{{page}}Page" class="page">
+    <div class="container">
+      <ul>
+        \{{#each {{page}}List}}
+        \{{> {{page}}ListItem}}
+        \{{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+
+
+<template name="{{page}}ListItem">
+  <li>
+    \{{_id}}
+  </li>
+</template>

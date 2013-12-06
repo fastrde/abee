@@ -46,16 +46,7 @@ module.exports = {
     },
     'test':{}
   },
-/*  dirs: {
-    subscriptions: 'client/lib/meteor/subscriptions',
-    publications:  'server/publications',
-    permission: 'server/permissions',
-    models: 'lib/models'
-  },
-  files: {
-    routes : 'client/lib/meteor/router.js',
-  },
-*/  view: {  
+  view: {  
     createFiles: [
       { 
         'name': '{{filename}}.html',
@@ -75,7 +66,7 @@ module.exports = {
       }
     ], 
   },
-  model: {
+  collection: {
   	createFiles: [
       { 
         'name': '{{filename}}Model.js',
@@ -123,5 +114,17 @@ module.exports = {
         }
       }
     ]
+  },
+  make:{
+    createFiles: [
+      { 
+        'name': '{{filename}}',
+        'dir' :'',
+        'template' : {
+          'names': ["make{{filename}}.js", "make.js"],
+          'dir'  : ''
+        }
+      }
+    ]   
   }
 };

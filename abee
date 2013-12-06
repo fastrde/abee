@@ -14,19 +14,20 @@
  * for you.
  */
 
-var abee     = require('./lib/abee.js');
+var abee       = require('./lib/abee.js');
 
-var create   = require('./lib/abee.js').create;
-var route    = require('./lib/abee.js').route;
-var template = require('./lib/abee.js').template;
-var model    = require('./lib/abee.js').model;
-var help     = require('./lib/abee.js').help;
+var create     = require('./lib/abee.js').create;
+var route      = require('./lib/abee.js').route;
+var template   = require('./lib/abee.js').template;
+var collection = require('./lib/abee.js').collection;
+var help       = require('./lib/abee.js').help;
+var page       = require('./lib/abee.js').page;
 
-var config   = require('./lib/config.js');
-var h        = require('./lib/helper.js');
-var C        = require('./lib/colors.js');
+var config     = require('./lib/config.js');
+var h          = require('./lib/helper.js');
+var C          = require('./lib/colors.js');
 
-var cmd      = process.argv[2];
+var cmd        = process.argv[2];
 
 if (cmd && cmd != 'create' && !h.checkMeteor()){
   return;
@@ -53,6 +54,32 @@ switch(cmd) {
 
   /* TODO: Add config list command to show baseconfigs to choose*/
 
+  case "page":
+    var subcmd = process.argv[3];
+    var template = process.argv[4];
+    switch (subcmd){
+      case "add":
+        //for (var i = 5; i < process.argv.length; i++){  
+          pages = process.argv.splice(5, process.argv.length-4);
+          page.add(template, pages);
+        //}
+      break;
+      case "remove":
+        for (var i = 4; i < process.argv.length; i++){  
+          option = process.argv[i];
+          option = option.split(":");
+          page.del(option[0], option[1]);
+        }
+      break;
+
+      default:
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
+      break;      
+    }
+  break;
+  
+  
+  break;
   case "template":
   case "view": 
     var subcmd    = process.argv[3];
@@ -120,7 +147,7 @@ switch(cmd) {
     }
   break;
 
-  case "model":
+  case "collection":
     var subcmd    = process.argv[3];
     var modelName = process.argv[4];
 
@@ -137,9 +164,9 @@ switch(cmd) {
               return;
             }
             i=i+1;
-            model.add(modelName, attr);
+            collection.add(modelName, attr);
           }else{
-            model.add(modelName);
+            collection.add(modelName);
           }
         }
       break;
@@ -147,7 +174,7 @@ switch(cmd) {
       case "remove":
         for (var i = 4; i < process.argv.length; i++){  
           modelName = process.argv[i];
-          model.del(modelName);
+          collection.del(modelName);
         }
       break;
 

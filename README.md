@@ -59,12 +59,18 @@ Creates meteor app like meteor does, but abeetizes it.
     
 prints help message.
  
-#### model     
+#### collection     
  
-    $ abee model add <modelName1> [attribute1,..,attributeN] ... <modelNameN> [attribute1,..,attributeN]
-    $ abee model remove <modelName1> ... <modelNameN>
+    $ abee collection add <collectionName1> [attributeForModel1,..,attributeForModelN] ... <collectionNameN> [attributeForModel1,..,attributeForModelN]
+    $ abee collection remove <collectionName1> ... <collectionNameN>
     
-creates a model, (and in the standard configuration) adds a collection, client-side subscriptions, server-side publications and permissions.
+creates a collection, (and in the standard configuration) adds a model, client-side subscriptions, server-side publications and permissions.
+
+#### page
+
+    $ abee page add <template> <pageName1> ... <pageNameN>
+    $ abee page add <pageName1> ... <pageNameN>
+    
 
 #### template 
      
@@ -205,12 +211,13 @@ the abee directory looks like this
     }
 
 Templates
-_________
-        Model : h.capitalize(filename),
-        model : filename.toLowerCase(),
-        attr  : attrParsed,
-        collection: h.capitalize(filename) + "Collection",   		 
+---------
+*hint: when you create an handlebars template for meteor with handlebars in 
+Abee you have to escape the handlebars variables in the template like this*
 
+    \{{meteorVariable}}  => {{meteorVariable}}
+    \{{meteor{{abeeVariable}}Variable}} => {{meteorHEREABEEINSERTEDVariable}}
+    
 <table>
 <tr><th>command</th><th colspan="2">config vars</th><th colspan="2">template vars</th></tr>
 <tr>
