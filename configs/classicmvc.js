@@ -114,17 +114,5 @@ module.exports = {
         }
       }
     ]
-  },
-  make:{
-    createFiles: [
-      { 
-        'name': '{{filename}}',
-        'dir' :'',
-        'template' : {
-          'names': ["make{{filename}}.js", "make.js"],
-          'dir'  : ''
-        }
-      }
-    ]   
   }
 };
