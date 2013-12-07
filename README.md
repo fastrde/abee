@@ -69,7 +69,7 @@ creates a collection, (and in the standard configuration) adds a model, client-s
 #### page
 
     $ abee page add <template> <pageName1> ... <pageNameN>
-    $ abee page add <pageName1> ... <pageNameN>
+    $ abee page remove <pageName1> ... <pageNameN>
     
 
 #### template 

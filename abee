@@ -16,12 +16,12 @@
 
 var abee       = require('./lib/abee.js');
 
-var create     = require('./lib/abee.js').create;
-var route      = require('./lib/abee.js').route;
-var template   = require('./lib/abee.js').template;
-var collection = require('./lib/abee.js').collection;
-var help       = require('./lib/abee.js').help;
-var page       = require('./lib/abee.js').page;
+var create     = abee.create;
+var route      = abee.route;
+var template   = abee.template;
+var collection = abee.collection;
+var help       = abee.help;
+var page       = abee.page;
 
 var h          = require('./lib/helper.js');
 var C          = require('./lib/colors.js');
@@ -55,17 +55,12 @@ switch(cmd) {
     var template = process.argv[4];
     switch (subcmd){
       case "add":
-        //for (var i = 5; i < process.argv.length; i++){  
           pages = process.argv.splice(5, process.argv.length-4);
           page.add(template, pages);
-        //}
       break;
       case "remove":
-        for (var i = 4; i < process.argv.length; i++){  
-          option = process.argv[i];
-          option = option.split(":");
-          page.del(option[0], option[1]);
-        }
+          pages = process.argv.splice(4, process.argv.length-4);
+          page.del(pages);
       break;
 
       default:
@@ -179,9 +174,8 @@ switch(cmd) {
       break;      
     }
   break;
-
-  case "help":
   default:
+  case "help":
     help();
   break;
 }

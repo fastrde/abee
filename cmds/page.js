@@ -28,8 +28,11 @@ module.exports = {
    * deletes the model with the the name "filename"
    * @param {String} filename 
    */
-  del : function(filename){
-  	cmd.delFromConfig(config.get('page'), {filename: filename});
+  del : function(pages){
+    for (var i = 0; i < pages.length; i++){
+      var page = pages[i];
+      cmd.delFromConfig(config.get('page'), {filename: page});
+    }
   },
   help : {'page':  "creates a whole page with model,controler and view with the given template\n"+
                    "  usage: abee page add <template> <page1> ... <pageN>\n"+
