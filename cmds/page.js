@@ -9,33 +9,45 @@ var C       = require('../lib/colors.js');
  
 module.exports = {
   /**
-   * adds a model with the given attributes to the meteor app
-   * @param {Object} model
-   * @param {Object} attr
+   * adds pages with the given template
+   * @param {String} template
+   * @param {Array<String>} pages
    */
   add : function(template, pages) {  
     for (var i = 0; i < pages.length; i++){
       var page = pages[i];
-      cmd.addFromConfig(config.get('page'),{filename: page, template: template},
-      {
-        template: template,
-        page: page
-      });
+      var section = config.get(['page', template]);
+      if (section){
+        cmd.addFromConfig(section,{filename: page, template: template},
+        {
+          template: template,
+          page: page
+        });
+      }else{
+        h.print("Pagetemplate "+ template +" not found!", "error");
+        process.exit(1);
+      }
     }
   },
-
   /**
-   * deletes the model with the the name "filename"
-   * @param {String} filename 
+   * deletes the pages
+   * @param {String} template
+   * @param {Array<String>} pages
    */
-  del : function(pages){
+  del : function(template, pages){
     for (var i = 0; i < pages.length; i++){
       var page = pages[i];
-      cmd.delFromConfig(config.get('page'), {filename: page});
+      var section = config.get(['page', template]);
+      if (section){
+        cmd.delFromConfig(section, {filename: page});
+      }else{
+        h.print("Pagetemplate "+ template +" not found!", "error");
+        process.exit(1);
+      }
     }
   },
   help : {'page':  "creates a whole page with model,controler and view with the given template\n"+
                    "  usage: abee page add <template> <page1> ... <pageN>\n"+
-                   "         abee page remove <page1> ... <pageN>\n"
+                   "         abee page remove <template> <page1> ... <pageN>\n"
          }
 };

@@ -59,8 +59,8 @@ switch(cmd) {
           page.add(template, pages);
       break;
       case "remove":
-          pages = process.argv.splice(4, process.argv.length-4);
-          page.del(pages);
+          pages = process.argv.splice(5, process.argv.length-4);
+          page.del(template, pages);
       break;
 
       default:

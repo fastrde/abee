@@ -67,31 +67,33 @@ module.exports = {
     ]
   },
   page: {
-    createFiles: [
-      {
-        'name': 'page.{{filename}}.html',
-        'dir' :'client/models',
-        'template' : {
-          'names': ["page.{{template}}.{{filename}}.html", "{{template}}.page.html", "page.html"],
-          'dir'  : ''
+    'list':{
+      createFiles: [
+        {
+          'name': 'page.{{filename}}.html',
+          'dir' :'client/models',
+          'template' : {
+            'names': ["page.{{template}}.{{filename}}.html", "{{template}}.page.html", "page.html"],
+            'dir'  : ''
+          },
         },
-      },
-      {
-        'name': 'page.{{filename}}.js',
-        'dir' :'client/controllers',
-        'template' : {
-          'names': ["page.{{template}}.{{filename}}.js", "{{template}}.page.js", "page.js"],
-          'dir'  : ''
+        {
+          'name': 'page.{{filename}}.js',
+          'dir' :'client/controllers',
+          'template' : {
+            'names': ["page.{{template}}.{{filename}}.js", "{{template}}.page.js", "page.js"],
+            'dir'  : ''
+          },
         },
-      },
-      {
-        'name': 'page.{{filename}}.less',
-        'dir' :'client/views',
-        'template' : {
-          'names': ["page.{{template}}.{{filename}}.less", "{{template}}.page.less", "page.less"],
-          'dir'  : ''
-        },
-      },
-    ],
+        {
+          'name': 'page.{{filename}}.less',
+          'dir' :'client/views',
+          'template' : {
+            'names': ["page.{{template}}.{{filename}}.less", "{{template}}.page.less", "page.less"],
+            'dir'  : ''
+          },
+        },  
+      ],
+    }
   }
 };
