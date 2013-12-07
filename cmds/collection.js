@@ -23,7 +23,7 @@ module.exports = {
     }
     
     // parse config-section model and do what it says
-    cmd.addFromConfig(config.get('model'),{filename: filename},
+    cmd.addFromConfig(config.get('collection'),{filename: filename},
     {
         Model : h.capitalize(filename),
         model : filename.toLowerCase(),
@@ -37,10 +37,10 @@ module.exports = {
    * @param {String} filename 
    */
   del : function(filename){
-  	cmd.delFromConfig(config.get('model'), {filename: filename});
+  	cmd.delFromConfig(config.get('collection'), {filename: filename});
   },
-  help : {'model': "creates a model (adds a collection and some stuff).\n"+
-                   "  usage: abee model add <modelName1> ... <modelNameN>\n"+
-                   "         abee model remove <modelName1> ... <modelNameN>\n"
+  help : {'collection': "creates a collection (adds a collection and some stuff).\n"+
+                        "  usage: abee collection add <collectionName1> ... <collectionNameN>\n"+
+                        "         abee collection remove <collectionName1> ... <collectionNameN>\n"
          }
 };

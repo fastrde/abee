@@ -88,7 +88,7 @@ module.exports = {
     configName = configName || fallbackConfig;
     if (h.isFile(appName)){
       h.print("Folder " + appName + " already exists. Aborting.\n", "error");
-      return;
+      process.exit(1);
     }  
     global.generatedAppName = appName; //TODO: have to be global? think about it.
     h.print("Create " + appName + "\n", "important");
@@ -118,18 +118,19 @@ module.exports = {
       return;
     }
     var appName = process.cwd().replace(/^.*\//, "");
-    global.generatedAppName = "."; //TODO: have to be global? think about it.
-    
+    global.generatedAppName = "."; //TODO: have to be global? think about it.   
     h.print("Abeetize " + appName + "\n", "important");
+    config.load(configName);
+
     config.addToProject(".", configName);
     var dirs = loadStructure(configName);    
     generateStructure(dirs, ".", ".", 0);
   },
   help: {
     'abeetize': "extends your app with a \"best practice\" directory structure. Does nothing else.\n" +
-                "  usage: abee abeetize <appName>\n\n",
+                "  usage: abee abeetize <design-pattern>\n\n",
     'create':   "creates an app like meteor does, but extends it with a \"best practice\" directory structure.\n" +
-                "  usage: abee create <appName>\n\n"
+                "  usage: abee create <appName> <design-pattern>\n\n"
   }
   
 };

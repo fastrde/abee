@@ -14,25 +14,22 @@
  * for you.
  */
 
-var abee     = require('./lib/abee.js');
+var abee       = require('./lib/abee.js');
 
-var create   = require('./lib/abee.js').create;
-var route    = require('./lib/abee.js').route;
-var template = require('./lib/abee.js').template;
-var model    = require('./lib/abee.js').model;
-var help     = require('./lib/abee.js').help;
+var create     = abee.create;
+var route      = abee.route;
+var template   = abee.template;
+var collection = abee.collection;
+var help       = abee.help;
+var page       = abee.page;
 
-var config   = require('./lib/config.js');
-var h        = require('./lib/helper.js');
-var C        = require('./lib/colors.js');
+var h          = require('./lib/helper.js');
+var C          = require('./lib/colors.js');
 
-var cmd      = process.argv[2];
+var cmd        = process.argv[2];
 
 if (cmd && cmd != 'create' && !h.checkMeteor()){
   return;
-}
-if (cmd && cmd != 'abeetize' && cmd != 'create'){
-  config.load();
 }
 if (cmd && cmd == 'create' && h.isMeteor()){
  h.print("already a meteor app in this directory\n", "error");
@@ -53,6 +50,27 @@ switch(cmd) {
 
   /* TODO: Add config list command to show baseconfigs to choose*/
 
+  case "page":
+    var subcmd = process.argv[3];
+    var template = process.argv[4];
+    switch (subcmd){
+      case "add":
+          pages = process.argv.splice(5, process.argv.length-4);
+          page.add(template, pages);
+      break;
+      case "remove":
+          pages = process.argv.splice(4, process.argv.length-4);
+          page.del(pages);
+      break;
+
+      default:
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
+      break;      
+    }
+  break;
+  
+  
+  break;
   case "template":
   case "view": 
     var subcmd    = process.argv[3];
@@ -120,7 +138,7 @@ switch(cmd) {
     }
   break;
 
-  case "model":
+  case "collection":
     var subcmd    = process.argv[3];
     var modelName = process.argv[4];
 
@@ -137,9 +155,9 @@ switch(cmd) {
               return;
             }
             i=i+1;
-            model.add(modelName, attr);
+            collection.add(modelName, attr);
           }else{
-            model.add(modelName);
+            collection.add(modelName);
           }
         }
       break;
@@ -147,7 +165,7 @@ switch(cmd) {
       case "remove":
         for (var i = 4; i < process.argv.length; i++){  
           modelName = process.argv[i];
-          model.del(modelName);
+          collection.del(modelName);
         }
       break;
 
@@ -156,9 +174,8 @@ switch(cmd) {
       break;      
     }
   break;
-
-  case "help":
   default:
+  case "help":
     help();
   break;
 }
