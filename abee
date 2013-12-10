@@ -22,6 +22,7 @@ var template   = abee.template;
 var collection = abee.collection;
 var help       = abee.help;
 var page       = abee.page;
+var config       = abee.config;
 
 var h          = require('./lib/helper.js');
 var C          = require('./lib/colors.js');
@@ -46,6 +47,22 @@ switch(cmd) {
     var appName    = process.argv[3];
     var configName = process.argv[4];
     create.meteorApp(appName, configName);
+  break;
+
+  case "config":
+    var subcmd = process.argv[3];
+    switch (subcmd){
+      case "make":      
+          config.make();
+      break;
+      case "list":      
+          config.list();
+      break;
+      
+      default:
+        h.print("subcommand " + subcmd + " unknown.\n", "error");
+      break;      
+    }
   break;
 
   /* TODO: Add config list command to show baseconfigs to choose*/

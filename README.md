@@ -47,6 +47,17 @@ commands:
     
 Extends your meteor app with Abees scaffolding capabilities and generate the chosen directory structure.
 
+#### config
+
+    $ abee config make
+    
+scaffolds a config by scanning your apps directory structure. Used to generate new design pattern configurations. 
+**This config is not usable out of the box.** You have to complete the "createFiles" and "addToFiles" sections.
+
+    $ abee config list
+    
+lists existing design pattern configurations
+
 #### create   
 
     $ abee create <YourAppName> <?design-pattern>
@@ -71,6 +82,7 @@ creates a collection, (and in the standard configuration) adds a model, client-s
     $ abee page add <template> <pageName1> ... <pageNameN>
     $ abee page remove <template> <pageName1> ... <pageNameN>
     
+adds or removes a complete page that is described in config section "template".
 
 #### template 
      
@@ -94,7 +106,7 @@ creates a route.
 
 Extends app "someHotStuff" with the classicmvc design-pattern
 
-    $ abee abeetize someHotStuff classicmvc
+    $ abee abeetize classicmvc
 
 Create a new app named "someHotStuff" with "best practice" directory structure
 
@@ -102,23 +114,23 @@ Create a new app named "someHotStuff" with "best practice" directory structure
 
 Create 3 templates named login, logout and forgotPassword in group usermgr
 
-    $ abee templates add login logout forgotPassword usemgr
+    $ abee template add login logout forgotPassword usemgr
 
 Create 2 templates (foo and bar) directly in the view directory
 
-    $ abee templates add foo bar .
+    $ abee template add foo bar .
 
 Create 2 models (user and post), 2 collection, 2 subscriptions and 2 publishs  
     
-    $ abee model add user post 
+    $ abee collection add user post 
  
 Same as above but with attributes
     
-    $ abee model add user [name,email,info] post [title,body,author]
+    $ abee collection add user [name,email,info] post [title,body,author]
 
-Remove models user and post
+Remove collections user and post
 
-    $ abee model remove user post
+    $ abee collection remove user post
 
 Creates a route with name 'name', path '/path' and template 'template' and another one with name1,/path1 and template1
 

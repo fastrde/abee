@@ -47,7 +47,7 @@ var hooks = {
       }
     }*/
   }
-}
+};
 
 module.exports = {
 
