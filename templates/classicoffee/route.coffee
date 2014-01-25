@@ -1,0 +1,1 @@
+  @route '{{name}}', path: '{{path}}', template: '{{template}}'
