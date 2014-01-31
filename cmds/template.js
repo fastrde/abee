@@ -49,40 +49,59 @@ var hooks = {
   }
 };
 
+/********************************************************************************************* EXPORTS */
+
+/**
+ * adds a template/view to the meteor app
+ * @param {Object} view
+ * @param {Object} group
+ */
+
+var add = function(filename, group) {
+  var addHooks = {};
+  if (group) {
+    addHooks = hooks;
+  }
+  cmd.addFromConfig(config.get('view'), {
+    filename : filename,
+    group : group
+  }, {
+    view : filename
+  }, addHooks);
+};
+/**
+ * deletes the template/view from the given group
+ * @param {Object} view
+ * @param {Object} group
+ */
+var del = function(filename, group) {
+  var delHooks = {};
+  if (group) {
+    delHooks = hooks;
+  }
+  cmd.delFromConfig(config.get('view'), {
+    filename : filename,
+    group : group
+  }, delHooks);
+};
+
 module.exports = {
-
-  /**
-   * adds a template/view to the meteor app
-   * @param {Object} view
-   * @param {Object} group
-   */
-  add : function(filename, group) {
-  	var addHooks = {};
-  	if (group){
-      addHooks = hooks; 
-  	}
-    cmd.addFromConfig(config.get('view'), {filename: filename, group: group},
-    {
-    	view : filename
-    }, addHooks);
-},
-
-  /**
-   * deletes the template/view from the given group
-   * @param {Object} view
-   * @param {Object} group
-   */
-  del : function(filename, group){
-    var delHooks = {};
-    if (group){
-      delHooks = hooks;
-    }
-    cmd.delFromConfig(config.get('view'), {filename: filename, group: group}, delHooks);
-  },
-  help: {'template': "creates a template in the clients template (default: client/views) directory.\n" +
-                     "  usage: abee template add <templateName1> ... <templateNameN> <templateGroup>\n" +
-                     "         abee template remove <templateName1> ... <templateNameN> <templateGroup>\n\n"+
-                     "  hint:  insert a . as templateGroup to omit templateGroup\n\n",
+  add : add,
+  del : del,
+  help: {'template': "creates a template in the clients template directory.\n" +
+                     "  usage: \n"+
+                     "    abee template add <templateName1> ... <templateNameN> [-g <templateGroup>]\n" +
+                     "    abee template remove <templateName1> ... <templateNameN> [-g <templateGroup>]\n"+
+                     "\n" +
+                     "  options:\n" +
+                     "    -g <templateGroup>: groups the added views in the directory <templateGroup>\n"+
+                     "                        or deletes the specified views in the directory <templateGroup>\n"+
+                     "\n" +
+                     "  example:\n"+
+                     "    abee template add student employee -g persons\n" +
+                     "    abee template add car \n" +
+                     "    abee template remove student -g persons\n" +
+                     "\n",                     
          'view':     "same as template.\n\n"
         }
 };

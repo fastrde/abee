@@ -1,3 +1,4 @@
+//COMMAND NOT IN USE AT THE MOMENT!
 var fs      = require('fs');
 var exec    = require('child_process').exec;
 
@@ -46,37 +47,15 @@ var parseDirectory = function(dir, depth) {
 var commandSection = function(command){
   var output = "  " + command + ": {\n";
   output += "    createFiles: [\n";
-/*
-  output += "      {\n"; 
-  output += "        'name': '{{filename}}ExampleEDIT.js', \n";
-  output += "        'dir' :'client/exampleEDIT',\n";
-  output += "        'template' : {\n";
-  output += "          'names': [\"{{filename}}ExampleEDIT.html\", \"exampleEDIT.html\"],\n";
-  output += "          'dir'  : ''\n";
-  output += "        }\n";
-  output += "      }\n";
-*/
   output += "      // YOU HAVE TO ADD SOMETHING TO DO HERE!\n";
   output += "      // READ \"Design pattern config\" at \n";
   output += "      // https://github.com/fastrde/abee/blob/master/README.md\n";
   output += "    ],\n";
   output += "    addToFiles: [\n";  
-/*
-  output += "      {\n"; 
-  output += "        'file' : 'exampleEDIT.js',\n"; 
-  output += "        'mark' : '//ABEE:ADD_EXAMPLE_EDIT',\n"; 
-  output += "        'dir'  : 'example/dir/EDIT',\n"; 
-  output += "        'template' : {\n"; 
-  output += "          'names' : [\"{{name}}exampleEDIT.js\", \"exampleEDIT.js\"],\n"; 
-  output += "          'dir' : ''\n"; 
-  output += "        }\n"; 
-  output += "      }\n"; 
-*/
   output += "      // YOU HAVE TO ADD SOMETHING TO DO HERE!\n";
   output += "      // READ \"Design pattern config\" at \n";
   output += "      // https://github.com/fastrde/abee/blob/master/README.md\n";
   output += "    ]\n";
-
   output += "  },\n";  
   return output;
 };
@@ -86,32 +65,11 @@ var pageSection = function(){
   for (var i = 0; i < sections.length; i++){
     output += "    '"+sections[i]+"': {\n";
     output += "      createFiles: [\n";
-/*    
-    output += "        {\n"; 
-    output += "          'name': '{{filename}}ExampleEDIT.js', \n";
-    output += "          'dir' :'client/exampleEDIT',\n";
-    output += "          'template' : {\n";
-    output += "            'names': [\"{{filename}}ExampleEDIT.html\", \"exampleEDIT.html\"],\n";
-    output += "            'dir'  : ''\n";
-    output += "          },\n";
-    output += "        }\n";
-*/
     output += "        // YOU HAVE TO ADD SOMETHING TO DO HERE!\n";
     output += "        // READ \"Design pattern config\" at \n";
     output += "        // https://github.com/fastrde/abee/blob/master/README.md\n";
     output += "      ],\n";
     output += "      addToFiles: [\n";  
-/*
-    output += "        {\n"; 
-    output += "          'file' : 'exampleEDIT.js',\n"; 
-    output += "          'mark' : '//ABEE:ADD_EXAMPLE_EDIT',\n"; 
-    output += "          'dir'  : 'example/dir/EDIT',\n"; 
-    output += "          'template' : {\n"; 
-    output += "            'names' : [\"{{name}}exampleEDIT.js\", \"exampleEDIT.js\"],\n"; 
-    output += "            'dir' : ''\n"; 
-    output += "          }\n"; 
-    output += "        }\n"; 
-*/
     output += "        // YOU HAVE TO ADD SOMETHING TO DO HERE!\n";
     output += "        // READ \"Design pattern config\" at \n";
     output += "        // https://github.com/fastrde/abee/blob/master/README.md\n";
@@ -122,9 +80,8 @@ var pageSection = function(){
   return output;
 };
 
-module.exports = {
-  make: function(){ 
-    //h.print("config for your directory structure is:\n", "important");
+/********************************************************************************************* EXPORTS */
+var make = function(){ 
     try {
       if (h.isMeteor()){
         h.print("module.exports = {\n  name: 'MYCONFIG',\n  structure: {");
@@ -140,13 +97,17 @@ module.exports = {
     }catch(e){
       console.log(e);
     }
-  },
-  list: function(){
+  };
+var list = function(){
     config.list();
-  },
+};
+
+module.exports = {
+  make: make,
+  list: list,
   help: {
-    'config': "Scans your meteor app directory and prints out an config object with your structure\n" +
-            "  usage: abee config scan\n\n",
+    'config': "NOT IN USE\n" +
+            "  usage: abee config list\n\n",
   }
 
 };

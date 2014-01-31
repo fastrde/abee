@@ -14,6 +14,23 @@
  * for you.
  */
 
+var argv       = require('optimist')
+                 .alias({
+                   'p':'pattern',
+                   'l':'lang',
+                   't':'template',
+                   'g':'group',
+                   'd':'deleteFiles'
+                 })
+                 .default({
+                   'p':'mvc',
+                   'l':'js',
+                   'g':false,
+                   'd':false
+                 })
+                 .boolean('d')
+                 .argv;
+
 var abee       = require('./lib/abee.js');
 
 var create     = abee.create;
@@ -22,35 +39,38 @@ var template   = abee.template;
 var collection = abee.collection;
 var help       = abee.help;
 var page       = abee.page;
-var config       = abee.config;
+var config     = abee.config;
 
 var h          = require('./lib/helper.js');
 var C          = require('./lib/colors.js');
 
-var cmd        = process.argv[2];
+var cmd        = argv._.splice(0, 1)[0];
 
 if (cmd && cmd != 'create' && !h.checkMeteor()){
   return;
 }
+
 if (cmd && cmd == 'create' && h.isMeteor()){
  h.print("already a meteor app in this directory\n", "error");
  return;
 }
 switch(cmd) {
   case "abeetize":
-    var appName    = process.argv[3];
-    var configName = process.argv[4];
-    create.abeetize(appName, configName);
+    var patternName  = argv.pattern;
+    var languageName = argv.lang;
+    var delFiles     = argv.deleteFiles;
+    create.abeetize(patternName, languageName, delFiles);
   break;
 
   case "create":
-    var appName    = process.argv[3];
-    var configName = process.argv[4];
-    create.meteorApp(appName, configName);
+    var appName     = argv._.splice(0, 1)[0];
+    var patternName = argv.pattern;
+    var languageName= argv.lang;
+    create.meteorApp(appName, patternName, languageName);
   break;
 
-  case "config":
-    var subcmd = process.argv[3];
+  /*case "config":
+    var subcmd = argv._.splice(0, 1)[0];
     switch (subcmd){
       case "make":      
           config.make();
@@ -65,18 +85,16 @@ switch(cmd) {
     }
   break;
 
-  /* TODO: Add config list command to show baseconfigs to choose*/
-
   case "page":
-    var subcmd = process.argv[3];
-    var template = process.argv[4];
+    var subcmd   = argv._.splice(0, 1)[0];
+    var template = argv.template;
     switch (subcmd){
       case "add":
-          pages = process.argv.splice(5, process.argv.length-4);
+          pages = argv._;
           page.add(template, pages);
       break;
       case "remove":
-          pages = process.argv.splice(5, process.argv.length-4);
+          pages = argv._;
           page.del(template, pages);
       break;
 
@@ -84,47 +102,27 @@ switch(cmd) {
         h.print("subcommand " + subcmd + " unknown.\n", "error");
       break;      
     }
-  break;
+  break;*/
   
   
-  break;
   case "template":
   case "view": 
-    var subcmd    = process.argv[3];
+    var subcmd    = argv._.splice(0, 1)[0];
+    var views     = argv._;
     var viewName  = "";
-    var viewGroup = process.argv[process.argv.length - 1];
+    var viewGroup = argv.group;
+ 
     switch (subcmd){
-
       case "add":
-        if (process.argv.length == 5){
-         viewName = process.argv[4];
-         template.add(viewName);
-         return;
-        }
-        for (var i = 4; i < process.argv.length - 1; i++){  
-          viewName = process.argv[i];
-          if (viewGroup != "."){
-            template.add(viewName, viewGroup);
-          }else{
-            template.add(viewName);
-          }
+        for (var i = 0; i < views.length; i++){
+          viewName = views[i];
+          template.add(viewName, viewGroup);
         }
       break;
-
       case "remove":
-        if (process.argv.length == 5){
-         viewName = process.argv[4];
-         template.del(viewName);
-         return;
-        }
-        for (var i = 4; i < process.argv.length - 1; i++){      
-          viewName = process.argv[i];
-          if (viewGroup != "."){
-            template.del(viewName, viewGroup);
-          }else{
-            template.del(viewName);
-          }
-
+        for (var i = 0; i < views.length; i++){      
+          viewName = views[i];
+          template.del(viewName, viewGroup);
         }
       break;
  
@@ -135,13 +133,14 @@ switch(cmd) {
   break;
 
   case "route":
-    var subcmd    = process.argv[3];
-    var routeName = process.argv[4];
+    var subcmd    = argv._.splice(0, 1)[0];
+    var routes    = argv._;
+ 
     switch (subcmd){
 
       case "add":
-        for (var i = 4; i < process.argv.length; i++){  
-          routeName = process.argv[i];
+        for (var i = 0; i < routes.length; i++){  
+          var routeName = routes[i];
           routeName = routeName.split(":");
           //        name          path          template
           //   or   path          template      undefined  
@@ -156,19 +155,19 @@ switch(cmd) {
   break;
 
   case "collection":
-    var subcmd    = process.argv[3];
-    var modelName = process.argv[4];
-
+    var subcmd    = argv._.splice(0, 1)[0];
+    var models    = argv._;
+    console.log(argv);
     switch (subcmd){
       case "add":
-        for (var i = 4; i < process.argv.length; i++){  
-          modelName = process.argv[i];
-          if (process.argv[i+1] && process.argv[i+1].match(/^\[/)){
-            var attr = process.argv[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
+        for (var i = 0; i < models.length; i++){  
+          var modelName = models[i];
+          if (models[i+1] && models[i+1].match(/^\[/)){
+            var attr = models[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
             try {              
               attr = JSON.parse(attr);
             }catch(e){
-              h.print("The attributes must specified as [attr1,attr2,attr3]\n");
+              h.print("The attributes must specified as attr1,attr2,attr3\n");
               return;
             }
             i=i+1;
@@ -180,8 +179,8 @@ switch(cmd) {
       break;
 
       case "remove":
-        for (var i = 4; i < process.argv.length; i++){  
-          modelName = process.argv[i];
+        for (var i = 0; i < models.length; i++){  
+          modelName = models[i];
           collection.del(modelName);
         }
       break;

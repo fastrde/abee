@@ -1,8 +1,8 @@
 {
   "name" : "abee",
   "barename": "abee",
-  "version" : "0.6.2-1",
-  "description" : "Abee is a templated and costumizable meteor scaffolding application that uses \"best practices\" from the meteor dev-workshops.",
+  "version" : "0.6.3",
+  "description" : "Abee is a template-based, highly costumizable meteor scaffolding application that supports javascript and coffescript.",
   "homepage" : "http://fastr.de/abee",
   "keywords": [
     "scaffolding",
@@ -23,7 +23,8 @@
     "node": ">=0.10.0"
   },
   "dependencies": {
-    "handlebars": "~1.1"    
+    "handlebars": "~1.1",
+    "optimist": "~0.6"    
   },
   "bin":{
     "abee": "abee"

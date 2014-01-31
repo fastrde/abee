@@ -7,40 +7,58 @@ var fsh     = require('../lib/fshelper.js');
 var tplh    = require('../lib/tplhelper.js');
 var C       = require('../lib/colors.js');
  
-module.exports = {
-  /**
-   * adds a model with the given attributes to the meteor app
-   * @param {Object} model
-   * @param {Object} attr
-   */
-  add : function(filename, attr) {  
-	// prepare attributes tor Handlebars
-    var attrParsed = [];
-    if (attr){
-      for (var i = 0; i < attr.length; i++){
-        attrParsed.push({name:attr[i], Name:h.capitalize(attr[i]), Model: h.capitalize(filename), model: filename.toLowerCase()});
-      }
-    }
-    
-    // parse config-section model and do what it says
-    cmd.addFromConfig(config.get('collection'),{filename: filename},
-    {
-        Model : h.capitalize(filename),
-        model : filename.toLowerCase(),
-        attr  : attrParsed,
-        collection: h.capitalize(filename) + "Collection",   		 
-    });
-  },
 
+/********************************************************************************************* EXPORTS */
+
+/**
+ * adds a model with the given attributes to the meteor app
+ * @param {Object} filename name of the collection
+ * @param {Object} attr attributes of the collection (getter/setter generated for these)
+ */
+var add = function(filename, attr) {
+  // prepare attributes for Handlebars
+  var attrParsed = [];
+  if (attr) {
+    for (var i = 0; i < attr.length; i++) {
+      attrParsed.push({
+        name : attr[i],
+        Name : h.capitalize(attr[i]),
+        Model : h.capitalize(filename),
+        model : filename.toLowerCase()
+      });
+    }
+  }
+  // parse config-section model and do what it says
+  cmd.addFromConfig(config.get('collection'), {
+    filename : filename
+  }, {
+    Model : h.capitalize(filename),
+    model : filename.toLowerCase(),
+    attr : attrParsed,
+    collection : h.capitalize(filename) + "Collection",
+  });
+}; 
   /**
    * deletes the model with the the name "filename"
-   * @param {String} filename 
+   * @param {String} filename name of collection to delete
    */
-  del : function(filename){
-  	cmd.delFromConfig(config.get('collection'), {filename: filename});
-  },
-  help : {'collection': "creates a collection (adds a collection and some stuff).\n"+
-                        "  usage: abee collection add <collectionName1> ... <collectionNameN>\n"+
-                        "         abee collection remove <collectionName1> ... <collectionNameN>\n"
+
+var del = function(filename){
+    cmd.delFromConfig(config.get('collection'), {filename: filename});
+};
+ 
+module.exports = {
+  add : add, 
+  del : del,
+  help : {'collection': "adds/removes a collection.\n"+
+                        "\n"+
+                        "  usage: \n"+
+                        "    abee collection add <collectionName1> [attr1,...,attrN] <collectionName2> [attr1,...,attrN] ... <collectionNameN>\n"+
+                        "    abee collection remove <collectionName1> ... <collectionNameN>\n" +
+                        "\n"+
+                        "  example: \n"+
+                        "    abee collection add person [name,firstname,age] car [engine] collectionWithNoAttributes nextCollection\n" +
+                        "    abee collection remove person car collectionWithNoAttributes nextCollection\n"+
+                        "\n"
          }
 };
