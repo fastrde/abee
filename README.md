@@ -1,11 +1,11 @@
-Abee 
+Abee v0.6.3
 ============================
 
-Abee is a meteor scaffolding application that allows you to use your own (or the build-in) design patterns to build a great meteor app in less time.
+Abee is a meteor scaffolding application that allows you to use your own (or the build-in) design patterns to build a great meteor app in less time. In Version 0.6.3 it supports now Javascript and Coffeescript as scripting languages.
 
 Abee
 
-- creates your app and build a "best practice" directory structure that you can choose from different configurations. 
+- creates your app and builds a "best practice" directory structure that you can choose from different configurations. 
 - extends your existing meteor app.
 - uses **Handlebars**, so you don't have to learn new stuff.
 - adds/removes *customizable* views/templates to/from your app.
@@ -18,7 +18,7 @@ Abee
 Why?
 --------
 
-I am to lazy to don't write the same stuff over and over again. Due to the structure of a meteor-app you have to do this stuff in multiple directories and/or multiple files. So i decided to let a bit of software do that work.
+I am to lazy to write the same stuff over and over again. Due to the structure of a meteor-app you have to do this stuff in multiple directories and/or multiple files. So i decided to let a bit of software do that work.
 
 Installation
 ----------------
@@ -35,106 +35,124 @@ To update:
 Usage
 ---------
 
-Abee operates in your app-directory (the place where you call meteor to start your app). The only exception is `create` because there is no app-directory before you call `create` ;-).
+Abee operates in your app-directory (the place where you call `meteor` to start your app). The only exception is `create`, because there is no app-directory before you call `create` ;-).
 
 **usage: abee command [subcommand] [options]**
 
 commands:
 
 #### abeetize
+Extends your meteor app with Abees scaffolding capabilities and generate the chosen directory structure in the choosen scripting language.
 
-    $ abee abeetize <?design-pattern>
+usage:
+
+    abee abeetize [-p <design-pattern>] [-l <language>] [-d]
     
-Extends your meteor app with Abees scaffolding capabilities and generate the chosen directory structure.
+options:
 
-#### config
-
-    $ abee config make
+    -p <design-pattern>: choose a design-pattern to build structure for
+                         supported: mvc (Model-View-Controller)
+                         default:   mvc
+    -l <language>:       choose scripting language
+                         supported: js (Javascript), coffee (Coffescript)
+                         default:   js
+    -d:                  delete meteor standard .html,.js,.css files 
+                         and remove insecure und autopublish modules.
     
-scaffolds a config by scanning your apps directory structure. Used to generate new design pattern configurations. 
-**This config is not usable out of the box.** You have to complete the "createFiles" and "addToFiles" sections.
+example:
 
-    $ abee config list
+Extend an App with mvc design-pattern (default). Use Coffeescript.
+
+    abee abeetize -l coffee
     
-lists existing design pattern configurations
+Extend an App with mvc design-pattern (default). Use Javascript (default). Also delete standard meteor app files and remove insecure and autopublish modules.
 
+    abee abeetize -d
+
+#### collection     
+Adds/removes a collection.
+    
+usage:
+
+    abee collection add <collectionName1> [attr1,...,attrN] <collectionName2> ...
+    abee collection remove <collectionName1> ... <collectionNameN>
+    
+example: 
+
+Adds a collection 'person' with Attributes 'name', 'firstname' and age. Adds another collection 'car' without Attributes.
+
+    abee collection add person [name,firstname,age] car 
+
+Removes the collections 'person' and 'car'
+
+    abee collection remove person car 
+    
 #### create   
+Creates an app like meteor does, but extends it with Abees scaffolding capabilities and generate the chosen directory structure in the choosen scripting language.
 
-    $ abee create <YourAppName> <?design-pattern>
+usage:
+
+    abee create <appName> [-p <design-pattern>] [-l <language>]
     
-Creates meteor app like meteor does, but abeetizes it.
+options:
+    
+    -p <design-pattern>: choose a design-pattern to build structure for
+                         supported: mvc
+                         default:   mvc
+    -l <language>:       choose scripting language
+                         supported: js (Javascript), coffee (Coffescript)
+                         default:   js
+    
+example:
+
+Create a meteor app called 'myNewApp' and abeetize that app with the mvc design-pattern the Coffeescript scripting language.
+
+    abee create -p mvc -l coffee myNewApp
+    
 
 #### help 
-                 
-    $ abee help
-    
-prints help message.
- 
-#### collection     
- 
-    $ abee collection add <collectionName1> [attributeForModel1,..,attributeForModelN] ... <collectionNameN> [attributeForModel1,..,attributeForModelN]
-    $ abee collection remove <collectionName1> ... <collectionNameN>
-    
-creates a collection, (and in the standard configuration) adds a model, client-side subscriptions, server-side publications and permissions.
+Prints the help message. 
 
-#### page
+usage:
 
-    $ abee page add <template> <pageName1> ... <pageNameN>
-    $ abee page remove <template> <pageName1> ... <pageNameN>
+    abee help
     
-adds or removes a complete page that is described in config section "template".
+ 
+
 
 #### template 
-     
-    $ abee template add <templateName1> ... <templateNameN> <templateGroup>
-    $ abee template remove <templateName1> ... <templateNameN> <templateGroup>
-   
-creates a template in the clients template directory.  
-*hint: insert a ```.``` as templateGroup or add only one template to omit templateGroup.*
+Creates a template in the clients template directory.
+
+usage: 
+
+    abee template add <templateName1> ... <templateNameN> [-g <templateGroup>]
+    abee template remove <templateName1> ... <templateNameN> [-g <templateGroup>]
+    
+options:
+
+    -g <templateGroup>: groups the added views in the directory <templateGroup>
+                        or deletes the specified views in the directory <templateGroup>
+    
+example:
+
+    abee template add student employee -g persons
+    abee template add car 
+    abee template remove student -g persons
 
 #### route   
-    
-    $ abee route add <path1> ... <pathN>
-    $ abee route add <path1>:<template1> ... <pathN>:<templateN>
-    $ abee route add <name1>:<path1>:<template1> ... <nameN>:<pathN>:<viewN>
-    
-    $ abee route add <name1> ... <name273>:<path273>:<template273> ... <pathN>:<templateN>
+Creates a route.
+
+usage: 
         
-creates a route.
- 
-### Usage Examples
-
-Extends app "someHotStuff" with the classicmvc design-pattern
-
-    $ abee abeetize classicmvc
-
-Create a new app named "someHotStuff" with "best practice" directory structure
-
-    $ abee create someHotStuff //default config is classicmvc so you don't have to write it
-
-Create 3 templates named login, logout and forgotPassword in group usermgr
-
-    $ abee template add login logout forgotPassword usemgr
-
-Create 2 templates (foo and bar) directly in the view directory
-
-    $ abee template add foo bar .
-
-Create 2 models (user and post), 2 collection, 2 subscriptions and 2 publishs  
+    abee route add [<name1>,]<path1>[,<template1>] ... [<nameN>,]<pathN>[,<templateN>]
     
-    $ abee collection add user post 
- 
-Same as above but with attributes
+example: 
+
+    abee route add myHome,/home,firstPage
+    abee route add /home
     
-    $ abee collection add user [name,email,info] post [title,body,author]
-
-Remove collections user and post
-
-    $ abee collection remove user post
-
-Creates a route with name 'name', path '/path' and template 'template' and another one with name1,/path1 and template1
-
-    $ abee route add name:path:template  name1:path1:template1 
+'abee route remove' is not supported at the moment.
+ 
 
 inside Abee
 -----------------
@@ -144,59 +162,74 @@ the abee directory looks like this
 
     -- abee             
      |-- cmds               // commands that added here where automaticaly load by Abee
+     | |-- collection.js   
+     | |-- config.js       // NOT ACTIVE
      | |-- create.js
-     | |-- model.js
+     | |-- page.js         // NOT ACTIVE 
      | |-- route.js
      | |-- template.js
      |
      |-- configs            // this folder holds the configurations for the design-patterns
-     | |-- classicmvc.js    // classical MVC configuration like ruby on rails
+     | |-- languages        // configs for scripting languages
+     | | |-- coffee.js      // coffeescript configuration
+     | | |-- js.js          // jacascript configuration
+     | |
+     | |-- patterns         // design-patterns
+     | | |-- mvc.js         // Model View Controller Pattern
+     | | |-- osimvc.js      // NOT ACTIVE SUPPORTED AT THE MOMENT
      | 
      |-- lib                // core libaries and helper functions
-     | |-- abee.js          
+     | |-- abee.js   
+     | |-- cmdhelper.js
      | |-- colors.js
      | |-- config.js
      | |-- fshelper.js
      | |-- helper.js
      | |-- tplhelper.js
      |
-     |-- templates          // here is the directory to store the templates for different 
-     | |-- classicmvc       // design-patterns. First Abee looks for the templates specified 
-     |   |-- index.html     // in the config in the subfolder of the same name as the config.
-     |   |-- model.js       // After that Abee searchs in the main templates folder.
-     |   |-- permissions.js
-     |   |-- publish.js
-     |   |-- route.js
-     |   |-- router.js
-     |   |-- subscription.js
-     |   |-- view.html
-     |   |-- view.js
+     |-- templates           // here is the directory to store the templates for different 
+     | |-- mvc               // design-patterns. First Abee looks for the templates specified 
+     | | |-- coffee
+     | | | |-- <template files>
+     | | |  
+     | | |-- js
+     | |   |-- <template files>
+     | |
+     | |-- osimvc
+     |   |-- coffee
+     |   | |-- <template files>
+     |   |      
+     |   |-- js
+     |     |-- <template files>
      |
      |-- abee                // the command-line interface
+     |-- changelog.md        // 
      |-- LICENSE             // license file
      |-- package.json        // npm description
      |-- README.md           // this file
      
 ### Design pattern config
 
-    name: 'classicmvc',               // name of the configuration 
+
+    pattern: 'mvc',                   // name of the configuration 
                                       // (same as filename without .js)
+    language: '{{templateSubFolder}}' // get set via language configuraion
     structure:{                       // the file and directory structure
       'emptyDir':{},                  // empty directory
       'dir':{                         // directory
         'subdir':{},                  // empty subdirectory
-        'emptyFile.ext': null.         // empty file
-        'fromTpl.ext': 'template.ext' // generates fromTpl.ext with 
+        'emptyFile.{{ext}}': null.        // empty file
+        'fromTpl.{{ext}}': 'template.{{ext}}' // generates fromTpl.ext with 
                                       // template.ext as template
       }
     },
     <command>:{                       // config section for the <command> (for example 'model')
       createFiles: [                  // this files will be generated when 
       {                               // '<command> add' is called
-        'name': '{{filename}}.html',  // name of the file
+        'name': '\{{filename}}.html',  // name of the file
         'dir' :'client/views',        // directory to store file
         'template' : {          
-          'names': ["{{filename}}.html", "view.html"], // look for these templates in the template dir
+          'names': ["\{{filename}}.html", "view.html"], // look for these templates in the template dir
                                                        // pick the first that matchs
           'dir'  : ''                 // subdirectory in template dir (not implemented yet)!
         },
@@ -210,7 +243,7 @@ the abee directory looks like this
         'dir'  : 'client/lib/meteor', // in this directory
         'mark' : '//ABEE:ADDROUTE',   // above this mark 
         'template' : {
-          'names' : ["{{name}}Route.js", "route.js"], //here are the snippets templates
+          'names' : ["\{{name}}Route.js", "route.js"], //here are the snippets templates
           'dir' : ''                  // subdirectory in template dir (not implemented yet)!
         }
       },
