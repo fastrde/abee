@@ -46,7 +46,7 @@ var C          = require('./lib/colors.js');
 
 var cmd        = argv._.splice(0, 1)[0];
 
-if (cmd && cmd != 'create' && !h.checkMeteor()){
+if (cmd && (cmd != 'create' && cmd != 'help') && !h.checkMeteor()){
   return;
 }
 
@@ -59,14 +59,24 @@ switch(cmd) {
     var patternName  = argv.pattern;
     var languageName = argv.lang;
     var delFiles     = argv.deleteFiles;
-    create.abeetize(patternName, languageName, delFiles);
+    
+    if (patternName && languageName){
+      create.abeetize(patternName, languageName, delFiles);
+    }else{
+      abee.help();
+    }
   break;
 
   case "create":
     var appName     = argv._.splice(0, 1)[0];
     var patternName = argv.pattern;
     var languageName= argv.lang;
-    create.meteorApp(appName, patternName, languageName);
+    
+    if (appName && patternName && languageName){
+      create.meteorApp(appName, patternName, languageName);
+    }else{
+      abee.help();
+    }
   break;
 
   /*case "config":
@@ -111,24 +121,28 @@ switch(cmd) {
     var views     = argv._;
     var viewName  = "";
     var viewGroup = argv.group;
+    
+    if (subcmd && views && views.length > 0){
+      switch (subcmd){
+        case "add":
+          for (var i = 0; i < views.length; i++){
+            viewName = views[i];
+            template.add(viewName, viewGroup);
+          }
+        break;
+        case "remove":
+          for (var i = 0; i < views.length; i++){      
+            viewName = views[i];
+            template.del(viewName, viewGroup);
+          }
+        break;
  
-    switch (subcmd){
-      case "add":
-        for (var i = 0; i < views.length; i++){
-          viewName = views[i];
-          template.add(viewName, viewGroup);
-        }
-      break;
-      case "remove":
-        for (var i = 0; i < views.length; i++){      
-          viewName = views[i];
-          template.del(viewName, viewGroup);
-        }
-      break;
- 
-      default:
-        h.print("subcommand " + subcmd + " unknown.\n", "error");
-      break;
+        default:
+          h.print("subcommand " + subcmd + " unknown.\n", "error");
+        break;
+      }
+    }else{
+      abee.help();
     }
   break;
 
@@ -136,63 +150,69 @@ switch(cmd) {
     var subcmd    = argv._.splice(0, 1)[0];
     var routes    = argv._;
  
-    switch (subcmd){
+    if (subcmd && routes && routes.length > 0){
+      switch (subcmd){
+        case "add":
+          for (var i = 0; i < routes.length; i++){  
+            var routeName = routes[i];
+            routeName = routeName.split(",");
+            //        name          path          template
+            //   or   path          template      undefined  
+            route.add(routeName[0], routeName[1], routeName[2]);
+          }
+        break;
 
-      case "add":
-        for (var i = 0; i < routes.length; i++){  
-          var routeName = routes[i];
-          routeName = routeName.split(":");
-          //        name          path          template
-          //   or   path          template      undefined  
-          route.add(routeName[0], routeName[1], routeName[2]);
-        }
-      break;
-
-      default:
-        h.print("subcommand " + subcmd + " unknown.\n", "error");
-      break;      
+        default:
+          h.print("subcommand " + subcmd + " unknown.\n", "error");
+        break;      
+      }
+    }else{
+      abee.help();
     }
   break;
 
   case "collection":
     var subcmd    = argv._.splice(0, 1)[0];
     var models    = argv._;
-    console.log(argv);
-    switch (subcmd){
-      case "add":
-        for (var i = 0; i < models.length; i++){  
-          var modelName = models[i];
-          if (models[i+1] && models[i+1].match(/^\[/)){
-            var attr = models[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
-            try {              
-              attr = JSON.parse(attr);
-            }catch(e){
-              h.print("The attributes must specified as attr1,attr2,attr3\n");
-              return;
+
+    if (subcmd && models && models.length > 0){
+    
+      switch (subcmd){
+        case "add":
+          for (var i = 0; i < models.length; i++){  
+            var modelName = models[i];
+            if (models[i+1] && models[i+1].match(/^\[/)){
+              var attr = models[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
+              try {              
+                attr = JSON.parse(attr);
+              }catch(e){
+                h.print("The attributes must specified as attr1,attr2,attr3\n");
+                return;
+              }
+              i=i+1;
+              collection.add(modelName, attr);
+            }else{
+              collection.add(modelName);
             }
-            i=i+1;
-            collection.add(modelName, attr);
-          }else{
-            collection.add(modelName);
           }
-        }
-      break;
-
-      case "remove":
-        for (var i = 0; i < models.length; i++){  
-          modelName = models[i];
-          collection.del(modelName);
-        }
-      break;
-
-      default:
-        h.print("subcommand " + subcmd + " unknown.\n", "error");
-      break;      
+        break;
+        case "remove":
+          for (var i = 0; i < models.length; i++){  
+            modelName = models[i];
+            collection.del(modelName);
+          }
+        break; 
+        default:
+          h.print("subcommand " + subcmd + " unknown.\n", "error");
+        break;      
+      }
+    }else{
+      abee.help();
     }
   break;
   default:
   case "help":
-    help();
+    abee.help();
   break;
 }
 

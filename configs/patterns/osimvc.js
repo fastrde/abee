@@ -1,3 +1,4 @@
+// NOT SUPPORTED AT THE MOMENT
 module.exports = {
   name: 'osimvc',
   structure : {
