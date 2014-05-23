@@ -103,6 +103,7 @@ switch(cmd) {
           pages = argv._;
           page.add(template, pages);
       break;
+      case "del":
       case "remove":
           pages = argv._;
           page.del(template, pages);
@@ -125,16 +126,11 @@ switch(cmd) {
     if (subcmd && views && views.length > 0){
       switch (subcmd){
         case "add":
-          for (var i = 0; i < views.length; i++){
-            viewName = views[i];
-            template.add(viewName, viewGroup);
-          }
+          template.add(views, viewGroup);
         break;
+        case "del":
         case "remove":
-          for (var i = 0; i < views.length; i++){      
-            viewName = views[i];
-            template.del(viewName, viewGroup);
-          }
+          template.del(views, viewGroup);
         break;
  
         default:
@@ -147,21 +143,19 @@ switch(cmd) {
   break;
 
   case "route":
-    var subcmd    = argv._.splice(0, 1)[0];
-    var routes    = argv._;
+    var subcmd      = argv._.splice(0, 1)[0];
+    var routestrings = argv._;
  
-    if (subcmd && routes && routes.length > 0){
+    if (subcmd && routestrings && routestrings.length > 0){
       switch (subcmd){
         case "add":
-          for (var i = 0; i < routes.length; i++){  
-            var routeName = routes[i];
-            routeName = routeName.split(",");
-            //        name          path          template
-            //   or   path          template      undefined  
-            route.add(routeName[0], routeName[1], routeName[2]);
-          }
+        	var routes = [];
+        	for (var i = 0; i < routestrings.length; i++) {
+        		var routeArray = routestrings[i].split(",");
+        		routes.push(routeArray);
+        	}     	
+            route.add(routes);
         break;
-
         default:
           h.print("subcommand " + subcmd + " unknown.\n", "error");
         break;      
@@ -173,16 +167,17 @@ switch(cmd) {
 
   case "collection":
     var subcmd    = argv._.splice(0, 1)[0];
-    var models    = argv._;
+    var modelstrings    = argv._;
 
-    if (subcmd && models && models.length > 0){
+    if (subcmd && modelstrings && modelstrings.length > 0){
     
       switch (subcmd){
         case "add":
-          for (var i = 0; i < models.length; i++){  
-            var modelName = models[i];
-            if (models[i+1] && models[i+1].match(/^\[/)){
-              var attr = models[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
+          var models = [];
+          for (var i = 0; i < modelstrings.length; i++){  
+            var modelName = modelstrings[i];
+            if (modelstrings[i+1] && modelstrings[i+1].match(/^\[/)){
+              var attr = modelstrings[i+1].replace(/(?:["']*)(\w+)(?:["']*)/g,"\"$1\"");
               try {              
                 attr = JSON.parse(attr);
               }catch(e){
@@ -190,17 +185,22 @@ switch(cmd) {
                 return;
               }
               i=i+1;
-              collection.add(modelName, attr);
+              var modelObj = {
+              	'name': modelName,
+              	'attr': attr
+              };
             }else{
-              collection.add(modelName);
-            }
+              var modelObj = {
+              	'name': modelName
+              };
+             }
+            models.push(modelObj);
           }
+          collection.add(models);
         break;
-        case "remove":
-          for (var i = 0; i < models.length; i++){  
-            modelName = models[i];
-            collection.del(modelName);
-          }
+        case "del":
+        case "remove":      
+            collection.del(modelstrings);
         break; 
         default:
           h.print("subcommand " + subcmd + " unknown.\n", "error");

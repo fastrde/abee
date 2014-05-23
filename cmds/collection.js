@@ -11,11 +11,22 @@ var C       = require('../lib/colors.js');
 /********************************************************************************************* EXPORTS */
 
 /**
+ * adds multiple models to the meteor app at once
+ * @param {Object} models
+ */
+var add = function(models) {
+  for (var i = 0; i < models.length; i++) {
+    addOne(models[i].name, models[i].attr);
+  }
+}; 
+
+
+/**
  * adds a model with the given attributes to the meteor app
  * @param {Object} filename name of the collection
  * @param {Object} attr attributes of the collection (getter/setter generated for these)
  */
-var add = function(filename, attr) {
+var addOne = function(filename, attr) {
   // prepare attributes for Handlebars
   var attrParsed = [];
   if (attr) {
@@ -38,12 +49,25 @@ var add = function(filename, attr) {
     collection : h.capitalize(filename) + "Collection",
   });
 }; 
-  /**
-   * deletes the model with the the name "filename"
-   * @param {String} filename name of collection to delete
-   */
 
-var del = function(filename){
+/**
+ * deletes multiple models for the meteor App at once
+ * @param {Array<String>} models
+ */
+
+var del = function(models){
+  for (var i = 0; i < models.length; i++){  
+    modelName = models[i];
+    delOne(modelName);
+  }
+};
+
+/**
+ * deletes the model with the name "filename"
+ * @param {String} filename name of collection to delete
+ */
+
+var delOne = function(filename){
     cmd.delFromConfig(config.get('collection'), {filename: filename});
 };
  

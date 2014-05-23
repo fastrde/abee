@@ -52,12 +52,26 @@ var hooks = {
 /********************************************************************************************* EXPORTS */
 
 /**
- * adds a template/view to the meteor app
- * @param {Object} view
+ * adds multiple templates/views to the meteor app at once
+ * @param {Object} filenames
  * @param {Object} group
  */
 
-var add = function(filename, group) {
+var add = function(filenames, group){
+  var filename = null;
+  for (var i = 0; i < filenames.length; i++){
+    filename = filenames[i];
+    addOne(filename, group);
+  }
+};
+
+/**
+ * adds a template/view to the meteor app
+ * @param {Object} filename
+ * @param {Object} group
+ */
+
+var addOne = function(filename, group) {
   var addHooks = {};
   if (group) {
     addHooks = hooks;
@@ -69,12 +83,27 @@ var add = function(filename, group) {
     view : filename
   }, addHooks);
 };
+
 /**
- * deletes the template/view from the given group
- * @param {Object} view
+ * deletes multiple templates/views from the given group at once
+ * @param {Object} filenames
  * @param {Object} group
  */
-var del = function(filename, group) {
+var del = function(filenames, group) {
+  var filename = null;
+  for (var i = 0; i < filenames.length; i++) {
+    filename = filenames[i];
+    delOne(filename, group);
+  }
+};
+
+/**
+
+ * deletes the template/view from the given group
+ * @param {Object} filename
+ * @param {Object} group
+ */
+var delOne = function(filename, group) {
   var delHooks = {};
   if (group) {
     delHooks = hooks;
