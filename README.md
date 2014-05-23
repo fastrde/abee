@@ -1,4 +1,4 @@
-Abee v0.6.3
+Abee v0.6.5
 ============================
 
 Abee is a meteor scaffolding application that allows you to use your own (or the build-in) design patterns to build a great meteor app in less time. In Version 0.6.3 it supports now Javascript and Coffeescript as scripting languages.
@@ -156,7 +156,6 @@ example:
 
 inside Abee
 -----------------
-
 ### Directory structure
 the abee directory looks like this
 
@@ -171,12 +170,19 @@ the abee directory looks like this
      |
      |-- configs            // this folder holds the configurations for the design-patterns
      | |-- languages        // configs for scripting languages
-     | | |-- coffee.js      // coffeescript configuration
-     | | |-- js.js          // jacascript configuration
+     | | |-- coffee
+     | | | |-- overwrites
+     | | | | |-- <pattern-overwrites> 
+     | | | |-- coffee.js      // coffeescript configuration
+     | | |
+     | | |-- js
+     | |   |-- overwrites
+     | |   | |-- <pattern-overwrites> 
+     | |   |-- js.js          // jacascript configuration
      | |
      | |-- patterns         // design-patterns
-     | | |-- mvc.js         // Model View Controller Pattern
-     | | |-- osimvc.js      // NOT ACTIVE SUPPORTED AT THE MOMENT
+     |   |-- mvc.js         // Model View Controller Pattern
+     |   |-- osimvc.js      // NOT ACTIVE SUPPORTED AT THE MOMENT
      | 
      |-- lib                // core libaries and helper functions
      | |-- abee.js   
@@ -207,6 +213,12 @@ the abee directory looks like this
      |-- LICENSE             // license file
      |-- package.json        // npm description
      |-- README.md           // this file
+ 
+ 
+You can add a '.abee' folder to your home directory following the same structure the 'configs'-folder has.
+The files created in this directory overlay the general config files. 
+ 
+
      
 ### Design pattern config
 
@@ -254,6 +266,93 @@ the abee directory looks like this
     <nextcommand>:{
       ...
     }
+
+### Language-specific overwrites
+you can overwrite parts of the general design pattern by placing a file in the 'overwrites'-folder of the language with the name of the design-pattern.
+For example, when you want to overwrite some parts in the design pattern when you the mvc pattern with the coffeescript language, then place a file named 'mvc.js' in the directory 'configs/languages/coffee/overwrites/'.
+Basically the file looks the same a design pattern does.
+The overwriting follow these rules:
+
+- if the string/object not exist -> create
+- if the string exists -> overwrite
+- if the object exists -> merge attributes
+- if the object exists and the object in the overwrite file has 'OVERWRITE' : 'yes' -> overwrite this object completly
+
+#### An Example
+The Design Pattern ...
+
+    module.exports = {
+      pattern: 'mvc',                       // name of the Design-Pattern
+      language: '{{templateSubFolder}}', // Template-Directory  
+      structure : {
+        'client':{                       // client only
+          'css':{},                      // cascading stylesheets
+          'js':{},                       // thirdparty libraries
+          'lib':{                        // gets loaded first
+            'helpers':{},                // client-side helper methods
+            'meteor':{  
+              'router.{{ext}}': "router.{{ext}}",  // client-side routing
+              'startup.{{ext}}': null,        // run on new client init
+              'subscriptions': {},       // Subscribe to data
+            }, 
+          },
+          'views':{                      // templates
+            'index.html': "index.html"   // start-webpage / layout
+          },                    
+        },
+        'lib':{                          // gets loaded first
+          'helpers':{},                  // client AND server helpers
+          'models':{                     // models  
+          }
+        }
+      }
+    }
+    
+... and the overwrite file ...
+
+    module.exports = {
+      myimportantchange: 'test',         // add new entry 
+      structure : {
+        'newfolder': {},                 // add new entry
+        'client':{                      
+          'lib':{
+            'OVERWRITE' : 'yes',         // delete the lib section in original config and add this section
+            'newfolder' : {}             
+          },
+          'views':{                      
+            'index.html': "home.html"    // alter entry              
+          }
+        }
+      }
+    };
+
+... get merged to
+
+    module.exports = {
+      pattern: 'mvc',                    
+      myimportantchange: 'test',
+      language: '{{templateSubFolder}}', 
+      structure : {
+        'newfolder': {},
+        'client':{                       
+          'css':{},                      
+          'js':{},                       
+          'lib':{                        
+            'newfolder' : {} 
+          },
+          'views':{                      
+            'index.html': "home.html"    
+          },                    
+        },
+        'lib':{                          
+          'helpers':{},                  
+          'models':{                     
+          }
+        }
+      }
+    }
+
+
 
 Templates
 ---------

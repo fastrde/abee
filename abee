@@ -95,7 +95,7 @@ switch(cmd) {
     }
   break;
 
-  case "page":
+ case "page":
     var subcmd   = argv._.splice(0, 1)[0];
     var template = argv.template;
     switch (subcmd){
