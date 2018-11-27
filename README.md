@@ -1,4 +1,4 @@
-(OUTDATED - NOT MAINTAINED)
+## Not maintained anymore
 
 Abee v0.6.3
 ============================
